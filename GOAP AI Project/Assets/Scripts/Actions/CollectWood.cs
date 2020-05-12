@@ -8,11 +8,6 @@ public class CollectWood : GOAPAction
 	/// If the agent has already collected wood.
 	/// </summary>
 	private bool m_Chopped = false;
-	
-	/// <summary>
-	/// The tree this agent has targetted for chopping for wood.
-	/// </summary>
-	private GameObject m_TargetTree = null;
 
 	/// <summary>
 	/// The time the agent started chopping.
@@ -43,7 +38,6 @@ public class CollectWood : GOAPAction
 	public override void DoReset()
 	{
 		m_Chopped = false;
-		m_TargetTree = null;
 		m_StartTime = 0.0f;
 	}
 
@@ -85,7 +79,6 @@ public class CollectWood : GOAPAction
 			{
 				closest = t;
 				closestDistance = dist;
-
 			}
 		}
 
@@ -93,7 +86,6 @@ public class CollectWood : GOAPAction
 			return false;
 
 		// Target the closest tree.
-		m_TargetTree = closest;
 		m_Target = closest;
 
 		return closest != null;

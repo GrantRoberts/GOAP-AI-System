@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Inventory))]
 public abstract class Worker : MonoBehaviour, GOAPInterface
@@ -11,18 +12,24 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	private Inventory m_Inventory = null;
 
 	/// <summary>
-	/// The worker's move speed.
-	/// </summary>
-	public float m_MoveSpeed = 3.0f;
-
-	/// <summary>
 	/// The range the worker can interact with things.
 	/// </summary>
 	public float m_InteractionRange = 1.0f;
 
+	/// <summary>
+	/// The nav mesh agent component.
+	/// </summary>
+	private NavMeshAgent m_NavAgent = null;
+
+	/// <summary>
+	/// The position of the target of the goal.
+	/// </summary>
+	private Vector3 m_TargetPosition = Vector3.zero;
+
 	private void Awake()
 	{
 		m_Inventory = GetComponent<Inventory>();
+		m_NavAgent = GetComponent<NavMeshAgent>();
 	}
 
 	/// <summary>
@@ -88,13 +95,20 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	public bool MoveAgent(GOAPAction nextAction)
 	{
 		// If the worker is within interation range of their target, they have reached their destination.
-		if ((transform.position - nextAction.m_Target.transform.position).magnitude < m_InteractionRange)
+		if ((transform.position - m_TargetPosition).magnitude < m_InteractionRange)
 		{
+			Debug.Log("I have reached my destination.");
 			nextAction.SetInRange(true);
 			return true;
 		}
 		// Else, they're still going.
 		else
+		{
+			// Set the nav mesh agent's destination to the destination of the goal.
+			m_TargetPosition = nextAction.m_Target.transform.position;
+			m_NavAgent.destination = m_TargetPosition;
+
 			return false;
+		}
 	}
 }

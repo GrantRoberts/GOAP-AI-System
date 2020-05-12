@@ -148,6 +148,7 @@ public class GOAPAgent : MonoBehaviour
 				return;
 			}
 
+			// If the agent has reached their destiniation, move to the next state.
 			if (m_DataProvider.MoveAgent(action))
 			{
 				fsm.RemoveState();

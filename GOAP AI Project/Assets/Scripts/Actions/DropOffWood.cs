@@ -10,11 +10,6 @@ public class DropOffWood : GOAPAction
 	private bool m_DroppedOffWood = false;
 
 	/// <summary>
-	/// The base to drop wood off to.
-	/// </summary>
-	private GameObject m_Base = null;
-
-	/// <summary>
 	/// Constructor.
 	/// </summary>
 	public DropOffWood()
@@ -35,7 +30,6 @@ public class DropOffWood : GOAPAction
 	public override void DoReset()
 	{
 		m_DroppedOffWood = false;
-		m_Base = null;
 	}
 
 	/// <summary>
@@ -63,10 +57,7 @@ public class DropOffWood : GOAPAction
 	/// <returns>If a base was found.</returns>
 	public override bool CheckProceduralPrecondition(GameObject agent)
 	{
-		GameObject supply = GameObject.FindGameObjectWithTag("Base");
-
-		m_Target = supply;
-		m_Base = supply;
+		m_Target = GameObject.FindGameObjectWithTag("Base");	 
 
 		return true;
 	}
@@ -80,7 +71,7 @@ public class DropOffWood : GOAPAction
 	{
 		Inventory inv = agent.GetComponent<Inventory>();
 
-		m_Base.GetComponent<Base>().AddWoodCollected(inv.GetWood());
+		m_Target.GetComponent<Base>().AddWoodCollected(inv.GetWood());
 		inv.SetWood(0);
 		m_DroppedOffWood = true;
 
