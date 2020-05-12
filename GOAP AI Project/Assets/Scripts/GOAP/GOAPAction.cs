@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GOAPAction : MonoBehaviour
+public abstract class GOAPAction : MonoBehaviour
 {
 	/// <summary>
 	/// What world state does this action require.
@@ -45,7 +45,10 @@ public class GOAPAction : MonoBehaviour
 	{
 		m_InRange = false;
 		m_Target = null;
+		DoReset();
 	}
+
+	public abstract void DoReset();
 
 	/// <summary>
 	/// Gets if the action is complete.
@@ -108,6 +111,7 @@ public class GOAPAction : MonoBehaviour
 	public void RemoveProcondition(string name)
 	{
 		KeyValuePair<string, object> remove = default(KeyValuePair<string, object>);
+		// Find the precondition to remove by checking their names.
 		foreach(KeyValuePair<string, object> con in m_Preconditions)
 		{
 			if (con.Key.Equals(name))

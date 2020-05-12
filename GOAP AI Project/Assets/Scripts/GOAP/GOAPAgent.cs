@@ -112,7 +112,7 @@ public class GOAPAgent : MonoBehaviour
 		m_IdleState = (fsm, gameObject) =>
 		{
 			HashSet<KeyValuePair<string, object>> worldState = m_DataProvider.GetWorldState();
-			HashSet<KeyValuePair<string, object>> goal = m_DataProvider.CreateGoalState();
+			HashSet<KeyValuePair<string, object>> goal = m_DataProvider.CreateWorldGoal();
 
 			Queue<GOAPAction> plan = m_Planner.Plan(gameObject, m_AvaliableActions, worldState, goal);
 			if (plan != null)
@@ -148,6 +148,7 @@ public class GOAPAgent : MonoBehaviour
 				return;
 			}
 
+			// If the agent has reached their destiniation, move to the next state.
 			if (m_DataProvider.MoveAgent(action))
 			{
 				fsm.RemoveState();
@@ -210,14 +211,7 @@ public class GOAPAgent : MonoBehaviour
 	/// </summary>
 	private void FindDataProvider()
 	{
-		foreach(Component comp in gameObject.GetComponents(typeof(Component)))
-		{
-			if (typeof(GOAPInterface).IsAssignableFrom(comp.GetType()))
-			{
-				m_DataProvider = (GOAPInterface)comp;
-				return;
-			}
-		}
+		m_DataProvider = gameObject.GetComponent<GOAPInterface>();
 	}
 
 	/// <summary>

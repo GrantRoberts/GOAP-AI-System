@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FSMState
+public interface FSMState
 {
-	private void Update(FiniteStateMachine fsm, GameObject gameObject);
+	void Update(FiniteStateMachine fsm, GameObject gameObject);
 }

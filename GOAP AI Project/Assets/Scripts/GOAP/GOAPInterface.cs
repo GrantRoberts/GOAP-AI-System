@@ -14,7 +14,7 @@ public interface GOAPInterface
 	/// Give the planner a new goal.
 	/// </summary>
 	/// <returns>The goal that was created.</returns>
-	HashSet<KeyValuePair<string, object>> CreateGoalState();
+	HashSet<KeyValuePair<string, object>> CreateWorldGoal();
 
 	/// <summary>
 	/// If the plan failed
