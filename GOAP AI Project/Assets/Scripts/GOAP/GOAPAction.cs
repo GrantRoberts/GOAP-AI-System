@@ -41,7 +41,7 @@ public class GOAPAction : MonoBehaviour
 	/// <summary>
 	/// Reset the variables of the action.
 	/// </summary>
-	public void GOAPActionReset()
+	public abstract void GOAPActionReset()
 	{
 		m_InRange = false;
 		m_Target = null;
@@ -108,6 +108,7 @@ public class GOAPAction : MonoBehaviour
 	public void RemoveProcondition(string name)
 	{
 		KeyValuePair<string, object> remove = default(KeyValuePair<string, object>);
+		// Find the precondition to remove by checking their names.
 		foreach(KeyValuePair<string, object> con in m_Preconditions)
 		{
 			if (con.Key.Equals(name))
