@@ -32,7 +32,7 @@ public class DropOffWood : GOAPAction
 	/// <summary>
 	/// Reset the action.
 	/// </summary>
-	public override void GOAPActionReset()
+	public override void DoReset()
 	{
 		m_DroppedOffWood = false;
 		m_Base = null;

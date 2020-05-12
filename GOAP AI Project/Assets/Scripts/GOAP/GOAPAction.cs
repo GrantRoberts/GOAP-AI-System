@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GOAPAction : MonoBehaviour
+public abstract class GOAPAction : MonoBehaviour
 {
 	/// <summary>
 	/// What world state does this action require.
@@ -41,11 +41,14 @@ public class GOAPAction : MonoBehaviour
 	/// <summary>
 	/// Reset the variables of the action.
 	/// </summary>
-	public abstract void GOAPActionReset()
+	public void GOAPActionReset()
 	{
 		m_InRange = false;
 		m_Target = null;
+		DoReset();
 	}
+
+	public abstract void DoReset();
 
 	/// <summary>
 	/// Gets if the action is complete.

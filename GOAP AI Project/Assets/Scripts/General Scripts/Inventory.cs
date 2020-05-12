@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
 	/// <summary>
 	/// The tool the agent has equipped.
 	/// </summary>
-	private string m_Tool;
+	private string m_Tool = "";
 
 	/// <summary>
 	/// Increase the wood in the agent's inventory.

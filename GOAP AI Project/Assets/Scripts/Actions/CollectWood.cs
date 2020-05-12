@@ -40,7 +40,7 @@ public class CollectWood : GOAPAction
 	/// <summary>
 	/// Reset the action.
 	/// </summary>
-	public override void GOAPActionReset()
+	public override void DoReset()
 	{
 		m_Chopped = false;
 		m_TargetTree = null;
