@@ -59,7 +59,7 @@ public class DropOffWood : GOAPAction
 	{
 		m_Target = GameObject.FindGameObjectWithTag("Base");	 
 
-		return true;
+		return m_Target != null;
 	}
 
 	/// <summary>

@@ -30,6 +30,12 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	{
 		m_Inventory = GetComponent<Inventory>();
 		m_NavAgent = GetComponent<NavMeshAgent>();
+		m_NavAgent.stoppingDistance = m_InteractionRange;
+	}
+
+	private void Update()
+	{
+		//Debug.Log(m_Inventory.GetWood());
 	}
 
 	/// <summary>
@@ -57,7 +63,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <param name="failedGoal">The goal that failed.</param>
 	public void PlanFailed(HashSet<KeyValuePair<string, object>> failedGoal)
 	{
-		Debug.Log("Goal Failed!");
+		//Debug.Log("Goal Failed!");
 	}
 
 	/// <summary>
@@ -67,7 +73,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <param name="actions">The actions for achieveing that goal</param>
 	public void PlanFound(HashSet<KeyValuePair<string, object>> goal, Queue<GOAPAction> actions)
 	{
-		Debug.Log("Goal Found!");
+		//Debug.Log("Goal Found!");
 	}
 
 	/// <summary>
@@ -75,7 +81,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// </summary>
 	public void ActionsFinished()
 	{
-		Debug.Log("Actions Finished!");
+		//Debug.Log("Actions Finished!");
 	}
 
 	/// <summary>
@@ -84,7 +90,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <param name="aborter">The action that aborted the plan.</param>
 	public void PlanAborted(GOAPAction aborter)
 	{
-		Debug.Log("Plan Aborted by " + aborter.name);
+		//Debug.Log("Plan Aborted by " + aborter.name);
 	}
 
 	/// <summary>
@@ -95,7 +101,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	public bool MoveAgent(GOAPAction nextAction)
 	{
 		// If the worker is within interation range of their target, they have reached their destination.
-		if ((transform.position - m_TargetPosition).magnitude < m_InteractionRange)
+		if ((transform.position - nextAction.m_Target.transform.position).magnitude < m_InteractionRange)
 		{
 			Debug.Log("I have reached my destination.");
 			nextAction.SetInRange(true);
