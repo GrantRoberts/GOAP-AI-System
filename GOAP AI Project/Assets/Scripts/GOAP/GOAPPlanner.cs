@@ -25,6 +25,7 @@ public class GOAPPlanner
 
 		// Actions we can perform.
 		HashSet<GOAPAction> usableActions = new HashSet<GOAPAction>();
+
 		// Go through each action the agent has avaliable and find the ones they can perform now.
 		foreach (GOAPAction action in avaliableActions)
 		{
@@ -35,6 +36,7 @@ public class GOAPPlanner
 		// Actions to the goal.
 		List<Node> leaves = new List<Node>();
 
+		// Create a starting node and begin building the graph of actions.
 		Node start = new Node(null, 0, worldState, null);
 		bool success = BuildGraph(start, leaves, usableActions, goal);
 
@@ -56,6 +58,7 @@ public class GOAPPlanner
 			}
 		}
 
+		// Build a linked list of actions for achieving the goal via the cheapest path.
 		List<GOAPAction> result = new List<GOAPAction>();
 		Node n = cheapest;
 		while (n != null)
@@ -65,6 +68,7 @@ public class GOAPPlanner
 			n = n.m_Parent;
 		}
 
+		// Create the queue of actions.
 		Queue<GOAPAction> queue = new Queue<GOAPAction>();
 		foreach(GOAPAction action in result)
 		{
@@ -75,13 +79,13 @@ public class GOAPPlanner
 	}
 
 	/// <summary>
-	/// 
+	/// Build the graph of actions for the GOAP AI to traverse.
 	/// </summary>
-	/// <param name="parent"></param>
-	/// <param name="leaves"></param>
-	/// <param name="usableActions"></param>
-	/// <param name="goal"></param>
-	/// <returns></returns>
+	/// <param name="parent">The starting node for the graph.</param>
+	/// <param name="leaves">The list of actions.</param>
+	/// <param name="usableActions">The actions that the agent can use.</param>
+	/// <param name="goal">The goal the agent is trying to complete</param>
+	/// <returns>The built graph.</returns>
 	private bool BuildGraph(Node parent, List<Node> leaves, HashSet<GOAPAction> usableActions, HashSet<KeyValuePair<string, object>> goal)
 	{
 		bool foundOne = false;
