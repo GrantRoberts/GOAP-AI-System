@@ -38,24 +38,20 @@ public class GOAPPlanner
 
 		// Create a starting node and begin building the graph of actions.
 		Node start = new Node(null, 0, worldState, null);
-		bool success = BuildGraph(start, leaves, usableActions, goal);
 
+		bool success = BuildGraph(start, leaves, usableActions, goal);
 		if (!success)
 		{
 			Debug.Log("Planning failed! Plan couldn't be created.");
 			return null;
 		}
 
-		Node cheapest = null;
+		// Find the cheapest node in the list.
+		Node cheapest = leaves[0];
 		foreach (Node leaf in leaves)
 		{
-			if (cheapest == null)
+			if (leaf.m_Cost < cheapest.m_Cost)
 				cheapest = leaf;
-			else
-			{
-				if (leaf.m_Cost < cheapest.m_Cost)
-					cheapest = leaf;
-			}
 		}
 
 		// Build a linked list of actions for achieving the goal via the cheapest path.
