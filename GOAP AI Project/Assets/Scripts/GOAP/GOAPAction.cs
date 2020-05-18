@@ -164,4 +164,13 @@ public abstract class GOAPAction : MonoBehaviour
 	{
 		return m_Effects;
 	}
+
+	/// <summary>
+	/// Get the action's target.
+	/// </summary>
+	/// <returns>The target of this action.</returns>
+	public GameObject GetTarget()
+	{
+		return m_Target;
+	}
 }

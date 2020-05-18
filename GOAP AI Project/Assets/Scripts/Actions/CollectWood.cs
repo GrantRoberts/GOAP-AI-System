@@ -72,13 +72,16 @@ public class CollectWood : GOAPAction
 		float closestDistance = (trees[0].transform.position - agent.transform.position).magnitude;
 
 		// Find the closest tree.
-		foreach(GameObject t in trees)
+		foreach (GameObject t in trees)
 		{
-			float dist = (t.transform.position - agent.transform.position).magnitude;
-			if (dist < closestDistance)
+			if (t.GetComponent<Tree>().GetFullyGrown())
 			{
-				closest = t;
-				closestDistance = dist;
+				float dist = (t.transform.position - agent.transform.position).magnitude;
+				if (dist < closestDistance)
+				{
+					closest = t;
+					closestDistance = dist;
+				}
 			}
 		}
 
@@ -98,15 +101,24 @@ public class CollectWood : GOAPAction
 	/// <returns>If the action is being performed.</returns>
 	public override bool Perform(GameObject agent)
 	{
-		if (m_StartTime == 0)
-			m_StartTime = Time.time;
-
-		if (Time.time - m_StartTime > m_WorkDuration)
+		// Make sure the target is still active before performing an action on it.
+		if (m_Target.GetComponent<Tree>().GetFullyGrown())
 		{
-			Inventory inv = agent.GetComponent<Inventory>();
-			inv.IncreaseWood(1);
-			m_Chopped = true;
+			if (m_StartTime == 0)
+				m_StartTime = Time.time;
+
+			if (Time.time - m_StartTime > m_WorkDuration)
+			{
+				Inventory inv = agent.GetComponent<Inventory>();
+				inv.IncreaseWood(1);
+				m_Chopped = true;
+				m_Target.GetComponent<Tree>().DecreaseWoodAmount(1);
+			}
+			return true;
 		}
-		return true;
+		else
+		{
+			return false;
+		}
 	}
 }

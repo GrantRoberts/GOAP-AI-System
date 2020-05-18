@@ -9,6 +9,8 @@ public class Inventory : MonoBehaviour
 	/// </summary>
 	private int m_WoodCollected = 0;
 
+	private int m_OreCollected = 0;
+
 	/// <summary>
 	/// The tool the agent has equipped.
 	/// </summary>
@@ -39,6 +41,21 @@ public class Inventory : MonoBehaviour
 	public void SetWood(int newWood)
 	{
 		m_WoodCollected = newWood;
+	}
+
+	public void IncreaseOre(int add)
+	{
+		m_OreCollected += add;
+	}
+
+	public int GetOre()
+	{
+		return m_OreCollected;
+	}
+
+	public void SetOre(int newOre)
+	{
+		m_OreCollected = newOre;
 	}
 
 	/// <summary>

@@ -38,8 +38,8 @@ public class GOAPPlanner
 
 		// Create a starting node and begin building the graph of actions.
 		Node start = new Node(null, 0, worldState, null);
-
 		bool success = BuildGraph(start, leaves, usableActions, goal);
+
 		if (!success)
 		{
 			Debug.Log("Planning failed! Plan couldn't be created.");

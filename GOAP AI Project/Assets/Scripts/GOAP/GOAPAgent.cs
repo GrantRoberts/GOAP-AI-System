@@ -163,6 +163,7 @@ public class GOAPAgent : MonoBehaviour
 	{
 		m_PerformActionState = (fsm, gameObject) =>
 		{
+			// If the agent has no plan, create an idle state and say we are doing nothing.
 			if (!HasActionPlan())
 			{
 				fsm.RemoveState();
@@ -176,15 +177,20 @@ public class GOAPAgent : MonoBehaviour
 			if (action.IsDone())
 				m_CurrentActions.Dequeue();
 
+			// If the agent has a plan.
 			if (HasActionPlan())
 			{
 				action = m_CurrentActions.Peek();
+				// Check if in range of action.
 				bool inRange = action.RequiresInRange() ? action.IsInRange() : true;
 
+				// If we are in range for the action.
 				if (inRange)
 				{
+					// Check if the agent was able to perform the action.
 					bool success = action.Perform(gameObject);
 
+					// If not, abort plan and go back to idle.
 					if (!success)
 					{
 						fsm.RemoveState();
@@ -192,16 +198,11 @@ public class GOAPAgent : MonoBehaviour
 						m_DataProvider.PlanAborted(action);
 					}
 				}
+				// If not in range, start moving towards target.
 				else
 				{
 					fsm.AddState(m_MoveToState);
 				}
-			}
-			else
-			{
-				fsm.RemoveState();
-				fsm.AddState(m_IdleState);
-				m_DataProvider.ActionsFinished();
 			}
 		};
 	}
