@@ -14,7 +14,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <summary>
 	/// The range the worker can interact with things.
 	/// </summary>
-	public float m_InteractionRange = 1.0f;
+	public float m_InteractionRange = 3.0f;
 
 	/// <summary>
 	/// The nav mesh agent component.
@@ -47,6 +47,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 		HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
 
 		worldData.Add(new KeyValuePair<string, object>("hasWood", (m_Inventory.GetWood() > 0)));
+		worldData.Add(new KeyValuePair<string, object>("hasOre", (m_Inventory.GetOre() > 0)));
 
 		return worldData;
 	}
@@ -103,7 +104,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 		// If the worker is within interation range of their target, they have reached their destination.
 		if ((transform.position - nextAction.m_Target.transform.position).magnitude < m_InteractionRange)
 		{
-			Debug.Log("I have reached my destination.");
+			//Debug.Log("I have reached my destination.");
 			nextAction.SetInRange(true);
 			return true;
 		}
