@@ -6,32 +6,33 @@ public class CameraMovement : MonoBehaviour
 {
 	public float m_MoveSpeed = 3.0f;
 
-	private Vector3 m_PlayerMovementInput = Vector3.zero;
+	private Vector3 m_KeyboardInput = Vector3.zero;
 
-	private Transform m_CameraTransform = null;
+	private Transform m_Camera = null;
 
 	private void Awake()
 	{
-		m_CameraTransform = transform.GetChild(0);
+		m_Camera = transform.GetChild(0);
 	}
 
 	// Update is called once per frame
 	void Update()
     {
-		// Movement.
-		m_PlayerMovementInput = Vector3.zero;
+		m_KeyboardInput = Vector3.zero;
 
-		m_PlayerMovementInput += m_CameraTransform.right * (Input.GetAxis("Horizontal") * m_MoveSpeed);
-		m_PlayerMovementInput += m_CameraTransform.forward * (Input.GetAxis("Vertical") * m_MoveSpeed);
+		m_KeyboardInput += transform.right * Input.GetAxis("Horizontal");
+		m_KeyboardInput += transform.forward * Input.GetAxis("Vertical");
 
-		m_PlayerMovementInput *= Time.deltaTime;
-
-		transform.position += new Vector3(m_PlayerMovementInput.x, 0.0f, -m_PlayerMovementInput.y);
+		transform.position += ((m_KeyboardInput * m_MoveSpeed) * Time.deltaTime);
 
 		// Camera Rotation.
 		if (Input.GetMouseButton(1))
 		{
-			m_CameraTransform.eulerAngles += new Vector3(Input.GetAxis("Mouse Y"), -Input.GetAxis("Mouse X"), 0.0f);
+			Cursor.lockState = CursorLockMode.Confined;
+			transform.eulerAngles += new Vector3(0.0f, -Input.GetAxis("Mouse X"), 0.0f);
+			m_Camera.eulerAngles += new Vector3(Input.GetAxis("Mouse Y"), 0.0f, 0.0f);
 		}
+		else
+			Cursor.lockState = CursorLockMode.None;
     }
 }
