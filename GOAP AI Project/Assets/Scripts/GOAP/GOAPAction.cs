@@ -27,7 +27,7 @@ public abstract class GOAPAction : MonoBehaviour
 	/// <summary>
 	/// The target of this action.
 	/// </summary>
-	public GameObject m_Target = null;
+	protected GameObject m_Target = null;
 
 	/// <summary>
 	/// Constructor.

@@ -140,7 +140,7 @@ public class GOAPAgent : MonoBehaviour
 		m_MoveToState = (fsm, gameObject) =>
 		{
 			GOAPAction action = m_CurrentActions.Peek();
-			if (action.RequiresInRange() && action.m_Target == null)
+			if (action.RequiresInRange() && action.GetTarget() == null)
 			{
 				fsm.RemoveState();
 				fsm.RemoveState();

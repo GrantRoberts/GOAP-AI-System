@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Logger : Worker
 {
-	/// <summary>
-	/// The amount of wood the logger aims to stay at.
-	/// </summary>
-	public int m_DesiredWoodLevel = 10;
-
 	public override HashSet<KeyValuePair<string, object>> GetWorldState()
 	{
 		HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
