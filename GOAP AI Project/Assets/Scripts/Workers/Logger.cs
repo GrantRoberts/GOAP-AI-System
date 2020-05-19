@@ -13,7 +13,7 @@ public class Logger : Worker
 	{
 		HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
 
-		worldData.Add(new KeyValuePair<string, object>("hasWoodAxe", (m_Inventory.GetTool() != "")));
+		worldData.Add(new KeyValuePair<string, object>("hasWoodAxe", (m_Inventory.GetTool() == "woodAxe")));
 		worldData.Add(new KeyValuePair<string, object>("hasWood", (m_Inventory.GetWood() > 0)));
 
 		return worldData;

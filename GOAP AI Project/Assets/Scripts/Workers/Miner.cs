@@ -9,7 +9,7 @@ public class Miner : Worker
 	{
 		HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
 
-		//worldData.Add(new KeyValuePair<string, object>("hasWoodAxe", (m_Inventory.GetTool() != "")));
+		worldData.Add(new KeyValuePair<string, object>("hasOrePick", (m_Inventory.GetTool() == "orePick")));
 		worldData.Add(new KeyValuePair<string, object>("hasOre", (m_Inventory.GetOre() > 0)));
 
 		return worldData;

@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectWoodAxe : GOAPAction
+public class CollectOrePick : GOAPAction
 {
 	/// <summary>
-	/// If a wood axe has been collected.
+	/// If an ore pick has been collected.
 	/// </summary>
 	private bool m_Collected = false;
 
 	/// <summary>
 	/// Constructor.
 	/// </summary>
-	public CollectWoodAxe()
+	public CollectOrePick()
 	{
-		AddPrecondition("hasWoodAxe", false);
+		AddPrecondition("hasOrePick", false);
 
-		AddEffect("hasWoodAxe", true);
+		AddEffect("hasOrePick", true);
 	}
 
 	/// <summary>
@@ -28,25 +28,25 @@ public class CollectWoodAxe : GOAPAction
 	}
 
 	/// <summary>
-	/// If the action has been completed.
+	/// If an ore pick has been collected.
 	/// </summary>
-	/// <returns>If the action has been completed.</returns>
+	/// <returns>If the agent has collected an ore pick./returns>
 	public override bool IsDone()
 	{
 		return m_Collected;
 	}
 
 	/// <summary>
-	/// Check if the action needs the agent to be in range.
+	/// If the agent has to be in range to complete this action.
 	/// </summary>
-	/// <returns>True, this action requires the agent to be in range.</returns>
+	/// <returns>True, the agent must be in range of the base.</returns>
 	public override bool RequiresInRange()
 	{
 		return true;
 	}
 
 	/// <summary>
-	/// Check if the agent can find the base to collect a wood axe from.
+	/// Check if the agent can find the base to collect an ore pick from.
 	/// </summary>
 	/// <param name="agent">The agent checking this action.</param>
 	/// <returns>If a target was found.</returns>
@@ -58,7 +58,7 @@ public class CollectWoodAxe : GOAPAction
 	}
 
 	/// <summary>
-	/// Collect a wood axe.
+	/// Collect a ore pick.
 	/// </summary>
 	/// <param name="agent">The agent performing the action.</param>
 	/// <returns>If the action was completed.</returns>
@@ -66,7 +66,7 @@ public class CollectWoodAxe : GOAPAction
 	{
 		Inventory inv = agent.GetComponent<Inventory>();
 
-		inv.SetTool("woodAxe");
+		inv.SetTool("orePick");
 
 		m_Collected = true;
 

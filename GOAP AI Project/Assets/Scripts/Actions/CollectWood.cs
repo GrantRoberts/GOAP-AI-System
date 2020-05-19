@@ -91,6 +91,8 @@ public class CollectWood : GOAPAction
 		// Target the closest tree.
 		m_Target = closest;
 
+		m_Cost = (transform.position - m_Target.transform.position).magnitude;
+
 		return closest != null;
 	}
 

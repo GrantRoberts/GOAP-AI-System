@@ -57,7 +57,9 @@ public class DropOffWood : GOAPAction
 	/// <returns>If a base was found.</returns>
 	public override bool CheckProceduralPrecondition(GameObject agent)
 	{
-		m_Target = GameObject.FindGameObjectWithTag("Base");	 
+		m_Target = GameObject.FindGameObjectWithTag("Base");
+
+		m_Cost = (transform.position - m_Target.transform.position).magnitude;
 
 		return m_Target != null;
 	}

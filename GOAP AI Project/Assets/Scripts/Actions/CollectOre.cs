@@ -24,6 +24,7 @@ public class CollectOre : GOAPAction
 	/// </summary>
 	public CollectOre()
 	{
+		AddPrecondition("hasOrePick", true);
 		AddPrecondition("hasOre", false);
 
 		AddEffect("hasOre", true);
