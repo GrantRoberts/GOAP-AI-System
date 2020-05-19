@@ -21,10 +21,10 @@ public class CollectWood : GOAPAction
 	/// <summary>
 	/// Constructor.
 	/// </summary>
-	public CollectWood ()
+	public CollectWood()
 	{
-		// Agent needs to have a tool.
-		//AddPrecondition("hasTool", true);
+		// Agent needs to have a wood (chopping) axe.
+		AddPrecondition("hasWoodAxe", true);
 		// Agent can't currently have wood already
 		AddPrecondition("hasWood", false);
 
@@ -90,6 +90,8 @@ public class CollectWood : GOAPAction
 
 		// Target the closest tree.
 		m_Target = closest;
+
+		m_Cost = (transform.position - m_Target.transform.position).magnitude;
 
 		return closest != null;
 	}

@@ -42,8 +42,8 @@ public class CameraMovement : MonoBehaviour
 		if (Input.GetMouseButton(1))
 		{
 			Cursor.lockState = CursorLockMode.Confined;
-			transform.eulerAngles += new Vector3(0.0f, -Input.GetAxis("Mouse X") * m_MouseSensitivity, 0.0f);
-			m_Camera.eulerAngles += new Vector3(Mathf.Clamp(Input.GetAxis("Mouse Y") * m_MouseSensitivity, -25.0f, 70.0f), 0.0f, 0.0f);
+			transform.eulerAngles += new Vector3(0.0f, Input.GetAxis("Mouse X") * m_MouseSensitivity, 0.0f);
+			m_Camera.eulerAngles += new Vector3(Mathf.Clamp(-Input.GetAxis("Mouse Y") * m_MouseSensitivity, -25.0f, 70.0f), 0.0f, 0.0f);
 		}
 		else
 			Cursor.lockState = CursorLockMode.None;

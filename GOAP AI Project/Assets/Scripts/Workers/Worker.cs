@@ -9,7 +9,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <summary>
 	/// The worker's inventory.
 	/// </summary>
-	private Inventory m_Inventory = null;
+	protected Inventory m_Inventory = null;
 
 	/// <summary>
 	/// The range the worker can interact with things.
@@ -42,15 +42,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// Get the current world state.
 	/// </summary>
 	/// <returns>The world state.</returns>
-	public HashSet<KeyValuePair<string, object>> GetWorldState()
-	{
-		HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
-
-		worldData.Add(new KeyValuePair<string, object>("hasWood", (m_Inventory.GetWood() > 0)));
-		worldData.Add(new KeyValuePair<string, object>("hasOre", (m_Inventory.GetOre() > 0)));
-
-		return worldData;
-	}
+	public abstract HashSet<KeyValuePair<string, object>> GetWorldState();
 
 	/// <summary>
 	/// Create a goal in the world.
@@ -102,7 +94,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	public bool MoveAgent(GOAPAction nextAction)
 	{
 		// If the worker is within interation range of their target, they have reached their destination.
-		if ((transform.position - nextAction.m_Target.transform.position).magnitude < m_InteractionRange)
+		if ((transform.position - nextAction.GetTarget().transform.position).magnitude < m_InteractionRange)
 		{
 			//Debug.Log("I have reached my destination.");
 			nextAction.SetInRange(true);
@@ -112,7 +104,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 		else
 		{
 			// Set the nav mesh agent's destination to the destination of the goal.
-			m_TargetPosition = nextAction.m_Target.transform.position;
+			m_TargetPosition = nextAction.GetTarget().transform.position;
 			m_NavAgent.destination = m_TargetPosition;
 
 			return false;

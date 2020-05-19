@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Logger : Worker
 {
-	/// <summary>
-	/// The amount of wood the logger aims to stay at.
-	/// </summary>
-	public int m_DesiredWoodLevel = 10;
+	public override HashSet<KeyValuePair<string, object>> GetWorldState()
+	{
+		HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
+
+		worldData.Add(new KeyValuePair<string, object>("hasWoodAxe", (m_Inventory.GetTool() == "woodAxe")));
+		worldData.Add(new KeyValuePair<string, object>("hasWood", (m_Inventory.GetWood() > 0)));
+
+		return worldData;
+	}
 
 	/// <summary>
 	/// Create the goal to collect wood.
