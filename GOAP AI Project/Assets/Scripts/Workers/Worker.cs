@@ -9,7 +9,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <summary>
 	/// The worker's inventory.
 	/// </summary>
-	private Inventory m_Inventory = null;
+	protected Inventory m_Inventory = null;
 
 	/// <summary>
 	/// The range the worker can interact with things.
@@ -42,15 +42,16 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// Get the current world state.
 	/// </summary>
 	/// <returns>The world state.</returns>
-	public HashSet<KeyValuePair<string, object>> GetWorldState()
-	{
-		HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
-
-		worldData.Add(new KeyValuePair<string, object>("hasWood", (m_Inventory.GetWood() > 0)));
-		worldData.Add(new KeyValuePair<string, object>("hasOre", (m_Inventory.GetOre() > 0)));
-
-		return worldData;
-	}
+	public abstract HashSet<KeyValuePair<string, object>> GetWorldState();
+	//{
+	//	HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
+	//
+	//	worldData.Add(new KeyValuePair<string, object>("hasWood", (m_Inventory.GetWood() > 0)));
+	//	worldData.Add(new KeyValuePair<string, object>("hasOre", (m_Inventory.GetOre() > 0)));
+	//	worldData.Add(new KeyValuePair<string, object>("hasWoodAxe", (m_Inventory.GetTool() != "")));
+	//
+	//	return worldData;
+	//}
 
 	/// <summary>
 	/// Create a goal in the world.
