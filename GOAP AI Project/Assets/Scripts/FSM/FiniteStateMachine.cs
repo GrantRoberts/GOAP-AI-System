@@ -14,11 +14,12 @@ public class FiniteStateMachine
 	/// <summary>
 	/// Update the FSM.
 	/// </summary>
-	/// <param name="gameObject">The state in the state machine to update.</param>
-	public void Update(GameObject gameObject)
+	/// <param name="agent">The agent to update.</param>
+	public void Update(GameObject agent)
 	{
+		// Call whatever lambda function is stored in the state.
 		if (m_StateStack.Peek() != null)
-			m_StateStack.Peek().Invoke(this, gameObject);
+			m_StateStack.Peek().Invoke(this, agent);
 	}
 
 	/// <summary>

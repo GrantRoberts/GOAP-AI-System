@@ -123,8 +123,6 @@ public class CollectWood : GOAPAction
 			return true;
 		}
 		else
-		{
 			return false;
-		}
 	}
 }

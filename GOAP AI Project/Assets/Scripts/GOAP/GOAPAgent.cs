@@ -10,17 +10,15 @@ public class GOAPAgent : MonoBehaviour
 	private FiniteStateMachine m_StateMachine = new FiniteStateMachine();
 
 	/// <summary>
-	/// The idle state.
+	/// The idle state. Agent will create a new plan from their currently unfullfilled goals.
 	/// </summary>
 	private FiniteStateMachine.FSMState m_IdleState;
-
 	/// <summary>
-	/// The move to point state.
+	/// The move state. Agent will move to their target.
 	/// </summary>
 	private FiniteStateMachine.FSMState m_MoveToState;
-
 	/// <summary>
-	/// The perform action state.
+	/// The perform action state. Agent will do whatever it is they need to do for the current action.
 	/// </summary>
 	private FiniteStateMachine.FSMState m_PerformActionState;
 
@@ -49,11 +47,21 @@ public class GOAPAgent : MonoBehaviour
 	/// </summary>
 	private void Awake()
 	{
-		FindDataProvider();
+		// Get the component that will keep track of our world state and goals (anything that inherits the Worker class).
+		m_DataProvider = gameObject.GetComponent<GOAPInterface>();
+
+		// Create the 3 states required for the AI to function.
+		// Doing nothing, so create a plan.
 		CreateIdleState();
+		// Move to target.
 		CreateMoveToState();
+		// Do whatever is needed for the current action.
 		CreatePerformActionState();
+
+		// Begin in the idle state.
 		m_StateMachine.AddState(m_IdleState);
+
+		// Get the actions the agent has avaliable to them.
 		LoadActions();
 	}
 
@@ -111,10 +119,16 @@ public class GOAPAgent : MonoBehaviour
 	{
 		m_IdleState = (fsm, gameObject) =>
 		{
+			// Check the world state.
 			HashSet<KeyValuePair<string, object>> worldState = m_DataProvider.GetWorldState();
+
+			// Check the current goals.
 			HashSet<KeyValuePair<string, object>> goal = m_DataProvider.CreateWorldGoal();
 
+			// Create a plan to fulfill the agent's goal world state.
 			Queue<GOAPAction> plan = m_Planner.Plan(gameObject, m_AvaliableActions, worldState, goal);
+
+			// If a valid plan was created, begin enacting on that plan.
 			if (plan != null)
 			{
 				m_CurrentActions = plan;
@@ -123,6 +137,7 @@ public class GOAPAgent : MonoBehaviour
 				fsm.RemoveState();
 				fsm.AddState(m_PerformActionState);
 			}
+			// Else, no valid plan could be created, say plan failed and try again.
 			else
 			{
 				m_DataProvider.PlanFailed(goal);
@@ -140,6 +155,7 @@ public class GOAPAgent : MonoBehaviour
 		m_MoveToState = (fsm, gameObject) =>
 		{
 			GOAPAction action = m_CurrentActions.Peek();
+			// If the current actions requires us to be in range of a target but we couldn't find a target, go to the idle state.
 			if (action.RequiresInRange() && action.GetTarget() == null)
 			{
 				fsm.RemoveState();
@@ -148,7 +164,7 @@ public class GOAPAgent : MonoBehaviour
 				return;
 			}
 
-			// If the agent has reached their destiniation, move to the next state.
+			// If the agent has reached the target of their current action, move to the next state.
 			if (m_DataProvider.MoveAgent(action))
 			{
 				fsm.RemoveState();
@@ -163,7 +179,7 @@ public class GOAPAgent : MonoBehaviour
 	{
 		m_PerformActionState = (fsm, gameObject) =>
 		{
-			// If the agent has no plan, create an idle state and say we are doing nothing.
+			// If the agent has no plan, go to the idle state and say we are doing nothing.
 			if (!HasActionPlan())
 			{
 				fsm.RemoveState();
@@ -205,14 +221,6 @@ public class GOAPAgent : MonoBehaviour
 				}
 			}
 		};
-	}
-
-	/// <summary>
-	/// Find the component of the agent that is providing data.
-	/// </summary>
-	private void FindDataProvider()
-	{
-		m_DataProvider = gameObject.GetComponent<GOAPInterface>();
 	}
 
 	/// <summary>
