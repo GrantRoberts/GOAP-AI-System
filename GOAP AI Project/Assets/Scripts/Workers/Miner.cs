@@ -11,6 +11,7 @@ public class Miner : Worker
 
 		worldData.Add(new KeyValuePair<string, object>("hasOrePick", (m_Inventory.GetTool() == "orePick")));
 		worldData.Add(new KeyValuePair<string, object>("hasOre", (m_Inventory.GetOre() > 0)));
+		worldData.Add(new KeyValuePair<string, object>("hungry", (m_Hunger < m_HungerThreshold)));
 
 		return worldData;
 	}
@@ -24,6 +25,7 @@ public class Miner : Worker
 		HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
 
 		goal.Add(new KeyValuePair<string, object>("collectOre", true));
+		goal.Add(new KeyValuePair<string, object>("hungry", false));
 
 		return goal;
 	}

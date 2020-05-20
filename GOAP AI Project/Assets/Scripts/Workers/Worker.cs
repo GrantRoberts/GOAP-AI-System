@@ -26,11 +26,18 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// </summary>
 	private Vector3 m_TargetPosition = Vector3.zero;
 
+	public float m_Hunger = 10.0f;
+
+	private float m_MaxHunger = 0.0f;
+
+	public float m_HungerThreshold = 5.0f;
+
 	private void Awake()
 	{
 		m_Inventory = GetComponent<Inventory>();
 		m_NavAgent = GetComponent<NavMeshAgent>();
 		m_NavAgent.stoppingDistance = m_InteractionRange;
+		m_MaxHunger = m_Hunger;
 	}
 
 	private void Update()
@@ -109,5 +116,20 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 
 			return false;
 		}
+	}
+
+	public float GetHunger()
+	{
+		return m_Hunger;
+	}
+
+	public void ResetHunger()
+	{
+		m_Hunger = m_MaxHunger;
+	}
+
+	public void DecreaseHunger(float decrease)
+	{
+		m_Hunger -= decrease;
 	}
 }

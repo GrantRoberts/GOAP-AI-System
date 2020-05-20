@@ -10,6 +10,7 @@ public class Logger : Worker
 
 		worldData.Add(new KeyValuePair<string, object>("hasWoodAxe", (m_Inventory.GetTool() == "woodAxe")));
 		worldData.Add(new KeyValuePair<string, object>("hasWood", (m_Inventory.GetWood() > 0)));
+		worldData.Add(new KeyValuePair<string, object>("hungry", (m_Hunger < m_HungerThreshold)));
 
 		return worldData;
 	}
@@ -23,6 +24,7 @@ public class Logger : Worker
 		HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
 
 		goal.Add(new KeyValuePair<string, object>("collectWood", true));
+		goal.Add(new KeyValuePair<string, object>("hungry", false));
 
 		return goal;
 	}

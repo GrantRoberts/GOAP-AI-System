@@ -13,10 +13,13 @@ public class CollectWood : GOAPAction
 	/// The time the agent started chopping.
 	/// </summary>
 	private float m_StartTime = 0.0f;
+
 	/// <summary>
 	/// How long it takes for the agent to collect wood.
 	/// </summary>
 	public float m_WorkDuration = 2.0f;
+
+	public float m_WorkHunger = 2.0f;
 
 	/// <summary>
 	/// Constructor.
@@ -26,7 +29,7 @@ public class CollectWood : GOAPAction
 		// Agent needs to have a wood (chopping) axe.
 		AddPrecondition("hasWoodAxe", true);
 		// Agent can't currently have wood already
-		AddPrecondition("hasWood", false);
+		//AddPrecondition("hasWood", false);
 
 		// This action causes the agent to have wood in it's inventory.
 		AddEffect("hasWood", true);
@@ -69,7 +72,7 @@ public class CollectWood : GOAPAction
 		// Get all the trees in the scene.
 		GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
 		GameObject closest = trees[0];
-		float closestDistance = (trees[0].transform.position - agent.transform.position).magnitude;
+		float closestDistance = (closest.transform.position - agent.transform.position).magnitude;
 
 		// Find the closest tree.
 		foreach (GameObject t in trees)
@@ -90,8 +93,6 @@ public class CollectWood : GOAPAction
 
 		// Target the closest tree.
 		m_Target = closest;
-
-		m_Cost = (transform.position - m_Target.transform.position).magnitude;
 
 		return closest != null;
 	}
@@ -115,12 +116,13 @@ public class CollectWood : GOAPAction
 				inv.IncreaseWood(1);
 				m_Chopped = true;
 				m_Target.GetComponent<Tree>().DecreaseWoodAmount(1);
+
+				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 			}
+
 			return true;
 		}
 		else
-		{
 			return false;
-		}
 	}
 }
