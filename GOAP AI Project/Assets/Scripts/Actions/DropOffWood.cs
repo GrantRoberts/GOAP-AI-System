@@ -59,8 +59,6 @@ public class DropOffWood : GOAPAction
 	{
 		m_Target = GameObject.FindGameObjectWithTag("Base");
 
-		m_Cost = (transform.position - m_Target.transform.position).magnitude;
-
 		return m_Target != null;
 	}
 

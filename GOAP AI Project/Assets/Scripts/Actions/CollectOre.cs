@@ -19,6 +19,8 @@ public class CollectOre : GOAPAction
 	/// </summary>
 	public float m_WorkDuration = 5.0f;
 
+	public float m_WorkHunger = 2.0f;
+
 	/// <summary>
 	/// Constructor.
 	/// </summary>
@@ -103,6 +105,7 @@ public class CollectOre : GOAPAction
 				Inventory inv = agent.GetComponent<Inventory>();
 				inv.IncreaseOre(1);
 				m_Mined = true;
+				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 			}
 			return true;
 		}
