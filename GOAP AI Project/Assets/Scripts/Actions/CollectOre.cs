@@ -119,8 +119,6 @@ public class CollectOre : GOAPAction
 				m_Mined = true;
 				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 
-				m_Inventory.SetProgress(0.0f);
-
 				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 			}
 

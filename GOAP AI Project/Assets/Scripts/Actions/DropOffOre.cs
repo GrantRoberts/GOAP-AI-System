@@ -72,6 +72,7 @@ public class DropOffOre : GOAPAction
 
 		m_Target.GetComponent<Base>().AddOreCollected(inv.GetOre());
 		inv.SetOre(0);
+		inv.SetProgress(0);
 		m_DroppedOffOre = true;
 
 		return true;
