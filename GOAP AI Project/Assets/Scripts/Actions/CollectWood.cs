@@ -19,7 +19,20 @@ public class CollectWood : GOAPAction
 	/// </summary>
 	public float m_WorkDuration = 2.0f;
 
+	/// <summary>
+	/// The hunger this action costs to perform.
+	/// </summary>
 	public float m_WorkHunger = 2.0f;
+
+	/// <summary>
+	/// The inventory of this agent.
+	/// </summary>
+	private Inventory m_Inventory = null;
+
+	private void Awake()
+	{
+		m_Inventory = GetComponent<Inventory>();
+	}
 
 	/// <summary>
 	/// Constructor.
@@ -112,13 +125,14 @@ public class CollectWood : GOAPAction
 
 			if (Time.time - m_StartTime > m_WorkDuration)
 			{
-				Inventory inv = agent.GetComponent<Inventory>();
-				inv.IncreaseWood(1);
+				m_Inventory.IncreaseWood(1);
 				m_Chopped = true;
 				m_Target.GetComponent<Tree>().DecreaseWoodAmount(1);
 
 				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 			}
+
+			m_Inventory.SetProgress((Time.time - m_StartTime) / m_WorkDuration);
 
 			return true;
 		}
