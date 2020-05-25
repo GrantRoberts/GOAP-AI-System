@@ -19,7 +19,20 @@ public class CollectOre : GOAPAction
 	/// </summary>
 	public float m_WorkDuration = 5.0f;
 
+	/// <summary>
+	/// The hunger this action costs to perform.
+	/// </summary>
 	public float m_WorkHunger = 2.0f;
+
+	/// <summary>
+	/// The inventory of this agent.
+	/// </summary>
+	private Inventory m_Inventory = null;
+
+	private void Awake()
+	{
+		m_Inventory = GetComponent<Inventory>();
+	}
 
 	/// <summary>
 	/// Constructor.
@@ -102,11 +115,17 @@ public class CollectOre : GOAPAction
 
 			if (Time.time - m_StartTime > m_WorkDuration)
 			{
-				Inventory inv = agent.GetComponent<Inventory>();
-				inv.IncreaseOre(1);
+				m_Inventory.IncreaseOre(1);
 				m_Mined = true;
 				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
+
+				m_Inventory.SetProgress(0.0f);
+
+				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 			}
+
+			m_Inventory.SetProgress((Time.time - m_StartTime) / m_WorkDuration);
+
 			return true;
 		}
 		else

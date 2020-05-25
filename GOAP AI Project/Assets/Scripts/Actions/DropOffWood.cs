@@ -73,6 +73,7 @@ public class DropOffWood : GOAPAction
 
 		m_Target.GetComponent<Base>().AddWoodCollected(inv.GetWood());
 		inv.SetWood(0);
+		inv.SetProgress(0);
 		m_DroppedOffWood = true;
 
 		return true;

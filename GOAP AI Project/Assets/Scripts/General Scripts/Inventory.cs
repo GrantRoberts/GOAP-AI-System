@@ -20,13 +20,28 @@ public class Inventory : MonoBehaviour
 	/// </summary>
 	private string m_Tool = "";
 
+	/// <summary>
+	/// The icons for the tools.
+	/// 0 - axe.
+	/// 1 - pick.
+	/// </summary>
 	public Sprite[] m_ToolIcons = new Sprite[0];
 
+	/// <summary>
+	/// The icon for the tool sprite.
+	/// </summary>
 	private Image m_ToolIcon = null;
+
+	/// <summary>
+	/// The progress bar.
+	/// </summary>
+	private Image m_ProgressBar = null;
 
 	private void Awake()
 	{
 		m_ToolIcon = transform.GetChild(0).GetChild(0).GetComponent<Image>();
+
+		m_ProgressBar = transform.GetChild(0).GetChild(1).GetComponent<Image>();
 	}
 
 	/// <summary>
@@ -104,7 +119,23 @@ public class Inventory : MonoBehaviour
 			m_ToolIcon.sprite = m_ToolIcons[0];
 		else if (m_Tool == "orePick")
 			m_ToolIcon.sprite = m_ToolIcons[1];
+	}
 
-		m_ToolIcon.color = new Color(1,1,1,1);
+	/// <summary>
+	/// Set the progress of the task for the progress bar.
+	/// </summary>
+	/// <param name="progress">Normalized float of the time taken to perform the task.</param>
+	public void SetProgress(float progress)
+	{
+		m_ProgressBar.fillAmount = progress;
+	}
+
+	/// <summary>
+	/// Set the sprite of the progress bar of the agent.
+	/// </summary>
+	/// <param name="progBar">The sprite to set the progress bar sprite to.</param>
+	public void SetProgressBarSprite(Sprite progBar)
+	{
+		m_ProgressBar.sprite = progBar;
 	}
 }

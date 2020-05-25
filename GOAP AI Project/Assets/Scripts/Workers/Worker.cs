@@ -26,11 +26,22 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// </summary>
 	private Vector3 m_TargetPosition = Vector3.zero;
 
+	/// <summary>
+	/// The hunger of the worker.
+	/// </summary>
 	public float m_Hunger = 10.0f;
 
+	/// <summary>
+	/// Max hunger, for resetting.
+	/// </summary>
 	private float m_MaxHunger = 0.0f;
 
+	/// <summary>
+	/// The threshold at which the agent begins seeking food.
+	/// </summary>
 	public float m_HungerThreshold = 5.0f;
+
+	public Sprite m_ResourceIcon = null;
 
 	private void Awake()
 	{
@@ -38,6 +49,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 		m_NavAgent = GetComponent<NavMeshAgent>();
 		m_NavAgent.stoppingDistance = m_InteractionRange;
 		m_MaxHunger = m_Hunger;
+		m_Inventory.SetProgressBarSprite(m_ResourceIcon);
 	}
 
 	private void Update()
@@ -131,5 +143,10 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	public void DecreaseHunger(float decrease)
 	{
 		m_Hunger -= decrease;
+	}
+
+	public Sprite GetResourceIcon()
+	{
+		return m_ResourceIcon;
 	}
 }
