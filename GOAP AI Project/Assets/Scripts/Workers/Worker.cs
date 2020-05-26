@@ -116,9 +116,9 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 		// If the worker is within interation range of their target, they have reached their destination.
 		if ((transform.position - nextAction.GetTarget().transform.position).magnitude < m_InteractionRange)
 		{
-			//Debug.Log("I have reached my destination.");
 			nextAction.SetInRange(true);
 			m_HaveDestination = false;
+			m_NavAgent.destination = transform.position;
 			return true;
 		}
 		// Else, they're still going.
