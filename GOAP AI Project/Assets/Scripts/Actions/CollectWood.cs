@@ -55,6 +55,8 @@ public class CollectWood : GOAPAction
 	{
 		m_Chopped = false;
 		m_StartTime = 0.0f;
+		if (m_Target != null)
+			m_Target.GetComponent<Tree>().SetCurrentLogger(null);
 	}
 
 	/// <summary>
@@ -87,16 +89,20 @@ public class CollectWood : GOAPAction
 		GameObject closest = trees[0];
 		float closestDistance = (closest.transform.position - agent.transform.position).magnitude;
 
+		Tree targetTree = null;
+
 		// Find the closest tree.
 		foreach (GameObject t in trees)
 		{
-			if (t.GetComponent<Tree>().GetFullyGrown())
+			Tree tree = t.GetComponent<Tree>();
+			if (tree.GetFullyGrown() && tree.GetCurrentLogger() == null)
 			{
 				float dist = (t.transform.position - agent.transform.position).magnitude;
 				if (dist < closestDistance)
 				{
 					closest = t;
 					closestDistance = dist;
+					targetTree = tree;
 				}
 			}
 		}
@@ -106,6 +112,8 @@ public class CollectWood : GOAPAction
 
 		// Target the closest tree.
 		m_Target = closest;
+		if (targetTree != null)
+			targetTree.SetCurrentLogger(gameObject);
 
 		return closest != null;
 	}
