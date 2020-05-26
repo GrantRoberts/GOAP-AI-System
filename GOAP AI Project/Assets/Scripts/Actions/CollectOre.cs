@@ -40,7 +40,6 @@ public class CollectOre : GOAPAction
 	public CollectOre()
 	{
 		AddPrecondition("hasOrePick", true);
-		AddPrecondition("hasOre", false);
 
 		AddEffect("hasOre", true);
 	}
@@ -79,16 +78,20 @@ public class CollectOre : GOAPAction
 	/// <returns>If an ore vein was found.</returns>
 	public override bool CheckProceduralPrecondition(GameObject agent)
 	{
+		// Get all the ore veins in the scene.
 		GameObject[] veins = GameObject.FindGameObjectsWithTag("Ore");
 		GameObject closest = veins[0];
 		float closestDistance = (closest.transform.position - agent.transform.position).magnitude;
 
+		// Find the closest ore vein.
 		foreach(GameObject v in veins)
 		{
+			// Check that no one else is targeting this ore vein.
 			OreVein ore = v.GetComponent<OreVein>();
 			if (ore.GetCurrentMiner() == null)
 			{
 				float dist = (v.transform.position - agent.transform.position).magnitude;
+				// Target the closest ore vein that no one else is targeting.
 				if (dist < closestDistance)
 				{
 					closest = v;
@@ -97,11 +100,14 @@ public class CollectOre : GOAPAction
 			}
 		}
 
+		// Return false if an ore vein couldn't be found.
 		if (closest == null)
 			return false;
 
+		// Target the closest ore vein.
 		m_Target = closest;
-		m_Target.GetComponent<OreVein>().SetCurrentMiner(agent);
+		// Tell the ore vein that this agent is targeting it.
+		m_Target.GetComponent<OreVein>().SetCurrentMiner(agent.name);
 
 		return closest != null;
 	}
@@ -113,13 +119,16 @@ public class CollectOre : GOAPAction
 	/// <returns>If the action was performed this frame.</returns>
 	public override bool Perform(GameObject agent)
 	{
+		// Make sure the ore vein is active.
 		if (m_Target.activeSelf != false)
 		{
 			if (m_StartTime == 0.0f)
 				m_StartTime = Time.time;
 
+			// Work complete.
 			if (Time.time - m_StartTime > m_WorkDuration)
 			{
+				// Update everything that work has been done.
 				m_Inventory.IncreaseOre(1);
 				m_Mined = true;
 				OreVein oreVein = m_Target.GetComponent<OreVein>();
@@ -129,10 +138,13 @@ public class CollectOre : GOAPAction
 				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 			}
 
+			// Set progress for progress bar.
 			m_Inventory.SetProgress((Time.time - m_StartTime) / m_WorkDuration);
 
+			// The action was performed this frame.
 			return true;
 		}
+		// The action was not performed this frame.
 		else
 			return false;
 	}

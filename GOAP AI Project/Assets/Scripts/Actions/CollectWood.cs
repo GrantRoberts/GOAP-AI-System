@@ -39,7 +39,7 @@ public class CollectWood : GOAPAction
 	/// </summary>
 	public CollectWood()
 	{
-		// Agent needs to have a wood (chopping) axe.
+		// Agent needs to have a wood axe.
 		AddPrecondition("hasWoodAxe", true);
 
 		// This action causes the agent to have wood in it's inventory.
@@ -93,7 +93,7 @@ public class CollectWood : GOAPAction
 			if (tree.GetFullyGrown() && tree.GetCurrentLogger() == null)
 			{
 				float dist = (t.transform.position - agent.transform.position).magnitude;
-				// Target the closest tree that no one else is targetting.
+				// Target the closest tree that no one else is targeting.
 				if (dist < closestDistance)
 				{
 					closest = t;
@@ -108,8 +108,8 @@ public class CollectWood : GOAPAction
 
 		// Target the closest tree.
 		m_Target = closest;
-		// Tell the tree that this agent is targetting it.
-		m_Target.GetComponent<Tree>().SetCurrentLogger(agent);
+		// Tell the tree that this agent is targeting it.
+		m_Target.GetComponent<Tree>().SetCurrentLogger(agent.name);
 
 		return closest != null;
 	}
@@ -121,7 +121,7 @@ public class CollectWood : GOAPAction
 	/// <returns>If the action is being performed.</returns>
 	public override bool Perform(GameObject agent)
 	{
-		// Make sure the target is still active before performing an action on it.
+		// Make sure the tree is fully grown before performing an action on it.
 		if (m_Target.GetComponent<Tree>().GetFullyGrown())
 		{
 			if (m_StartTime == 0)
@@ -130,6 +130,7 @@ public class CollectWood : GOAPAction
 			// Work complete.
 			if (Time.time - m_StartTime > m_WorkDuration)
 			{
+				// Update everything that work has been done.
 				m_Inventory.IncreaseWood(1);
 				m_Chopped = true;
 				Tree targetTree = m_Target.GetComponent<Tree>();
