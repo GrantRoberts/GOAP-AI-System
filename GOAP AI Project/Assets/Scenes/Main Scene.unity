@@ -814,6 +814,7 @@ MonoBehaviour:
   m_Hunger: 10
   m_HungerThreshold: 5
   m_ResourceIcon: {fileID: 21300000, guid: 0960b7512af12f64c805ca97fe8a021b, type: 3}
+  m_HungerModifier: 0.002
 --- !u!114 &525998587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1127,6 +1128,7 @@ MonoBehaviour:
   m_Hunger: 10
   m_HungerThreshold: 5
   m_ResourceIcon: {fileID: 21300000, guid: be96bdaf4969c4f46bfc206f870290e4, type: 3}
+  m_HungerModifier: 0.002
 --- !u!114 &603203707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2121,6 +2123,7 @@ MonoBehaviour:
   m_Hunger: 10
   m_HungerThreshold: 5
   m_ResourceIcon: {fileID: 21300000, guid: be96bdaf4969c4f46bfc206f870290e4, type: 3}
+  m_HungerModifier: 0.002
 --- !u!114 &1139092659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2507,6 +2510,7 @@ MonoBehaviour:
   m_Hunger: 10
   m_HungerThreshold: 5
   m_ResourceIcon: {fileID: 21300000, guid: be96bdaf4969c4f46bfc206f870290e4, type: 3}
+  m_HungerModifier: 0.002
 --- !u!114 &1571756575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2608,6 +2612,7 @@ MonoBehaviour:
   m_Hunger: 10
   m_HungerThreshold: 5
   m_ResourceIcon: {fileID: 21300000, guid: be96bdaf4969c4f46bfc206f870290e4, type: 3}
+  m_HungerModifier: 0.002
 --- !u!114 &1647422641
 MonoBehaviour:
   m_ObjectHideFlags: 0

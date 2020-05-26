@@ -41,9 +41,15 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// </summary>
 	public float m_HungerThreshold = 5.0f;
 
+	/// <summary>
+	/// The icon for the resource this worker is carrying.
+	/// </summary>
 	public Sprite m_ResourceIcon = null;
 
-	public float m_HungerModifier = 0.2f;
+	/// <summary>
+	/// Modifier for decreasing the worker's hunger over time.
+	/// </summary>
+	public float m_HungerModifier = 0.002f;
 
 	private void Awake()
 	{
@@ -55,7 +61,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 
 	private void Update()
 	{
-		m_Hunger -= Time.deltaTime * m_HungerModifier;
+		m_Hunger -= (Time.deltaTime * m_HungerModifier);
 	}
 
 	/// <summary>
@@ -131,21 +137,36 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 		}
 	}
 
+	/// <summary>
+	/// Get the worker's hunger.
+	/// </summary>
+	/// <returns>The worker's hunger.</returns>
 	public float GetHunger()
 	{
 		return m_Hunger;
 	}
 
+	/// <summary>
+	/// Reset the worker's hunger.
+	/// </summary>
 	public void ResetHunger()
 	{
 		m_Hunger = m_MaxHunger;
 	}
 
+	/// <summary>
+	/// Decrease the worker's hunger.
+	/// </summary>
+	/// <param name="decrease">How much to decrease the worker's hunger by.</param>
 	public void DecreaseHunger(float decrease)
 	{
 		m_Hunger -= decrease;
 	}
 
+	/// <summary>
+	/// Get the resource icon from the worker.
+	/// </summary>
+	/// <returns>Sprite of the resource the worker can carry.</returns>
 	public Sprite GetResourceIcon()
 	{
 		return m_ResourceIcon;
