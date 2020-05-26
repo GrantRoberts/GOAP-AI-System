@@ -9,6 +9,9 @@ public class Tree : MonoBehaviour
 	/// </summary>
 	public int m_WoodAmount = 5;
 
+	/// <summary>
+	/// How much wood to restore the trees to.
+	/// </summary>
 	private int m_DefaultWoodAmount = 0;
 
 	/// <summary>
@@ -26,9 +29,20 @@ public class Tree : MonoBehaviour
 	/// </summary>
 	private Vector3 m_FullyGrownScale  = Vector3.zero;
 
+	/// <summary>
+	/// How long it takes for the tree to grow back.
+	/// </summary>
 	public float m_GrowingTime = 3.0f;
 
+	/// <summary>
+	/// The time an agent began cutting this tree down.
+	/// </summary>
 	private float m_StartGrowingTime = 0.0f;
+
+	/// <summary>
+	/// Who is currently targetting this tree.
+	/// </summary>
+	private GameObject m_CurrentLogger = null;
 
 	private void Awake()
 	{
@@ -85,5 +99,23 @@ public class Tree : MonoBehaviour
 	public bool GetFullyGrown()
 	{
 		return m_FullyGrown;
+	}
+
+	/// <summary>
+	/// Set the agent currently targeting this tree.
+	/// </summary>
+	/// <param name="logger">GameObject of the agent targeting this tree.</param>
+	public void SetCurrentLogger(GameObject logger)
+	{
+		m_CurrentLogger = logger;
+	}
+
+	/// <summary>
+	/// Get the current agent targeting this tree.
+	/// </summary>
+	/// <returns>GameObject of the agent targeting this tree, null if none.</returns>
+	public GameObject GetCurrentLogger()
+	{
+		return m_CurrentLogger;
 	}
 }

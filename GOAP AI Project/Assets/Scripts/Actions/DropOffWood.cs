@@ -15,13 +15,13 @@ public class DropOffWood : GOAPAction
 	public DropOffWood()
 	{
 		// Agent must have wood.
-		AddPrecondition("hasWood", true);
+		AddPrecondition("hasWoodHeld", true);
 
 		// Agent will no longer have wood.
-		AddEffect("hasWood", false);
+		AddEffect("hasWoodHeld", false);
 
 		// Wood will have been collected.
-		AddEffect("collectWood", true);
+		AddEffect("collectedWood", true);
 	}
 
 	/// <summary>

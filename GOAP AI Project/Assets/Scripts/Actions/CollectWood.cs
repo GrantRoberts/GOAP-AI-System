@@ -41,11 +41,9 @@ public class CollectWood : GOAPAction
 	{
 		// Agent needs to have a wood (chopping) axe.
 		AddPrecondition("hasWoodAxe", true);
-		// Agent can't currently have wood already
-		//AddPrecondition("hasWood", false);
 
 		// This action causes the agent to have wood in it's inventory.
-		AddEffect("hasWood", true);
+		AddEffect("hasWoodHeld", true);
 	}
 
 	/// <summary>
@@ -90,9 +88,12 @@ public class CollectWood : GOAPAction
 		// Find the closest tree.
 		foreach (GameObject t in trees)
 		{
-			if (t.GetComponent<Tree>().GetFullyGrown())
+			// Check the tree is fully grown and no one is targetting this tree.
+			Tree tree = t.GetComponent<Tree>();
+			if (tree.GetFullyGrown() && tree.GetCurrentLogger() == null)
 			{
 				float dist = (t.transform.position - agent.transform.position).magnitude;
+				// Target the closest tree that no one else is targetting.
 				if (dist < closestDistance)
 				{
 					closest = t;
@@ -101,11 +102,14 @@ public class CollectWood : GOAPAction
 			}
 		}
 
+		// Return false if this action doesn't have a target.
 		if (closest == null)
 			return false;
 
 		// Target the closest tree.
 		m_Target = closest;
+		// Tell the tree that this agent is targetting it.
+		m_Target.GetComponent<Tree>().SetCurrentLogger(agent);
 
 		return closest != null;
 	}
@@ -123,17 +127,22 @@ public class CollectWood : GOAPAction
 			if (m_StartTime == 0)
 				m_StartTime = Time.time;
 
+			// Work complete.
 			if (Time.time - m_StartTime > m_WorkDuration)
 			{
 				m_Inventory.IncreaseWood(1);
 				m_Chopped = true;
-				m_Target.GetComponent<Tree>().DecreaseWoodAmount(1);
+				Tree targetTree = m_Target.GetComponent<Tree>();
+				targetTree.DecreaseWoodAmount(1);
+				targetTree.SetCurrentLogger(null);
 
 				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 			}
 
+			// Set progress for the progress bar.
 			m_Inventory.SetProgress((Time.time - m_StartTime) / m_WorkDuration);
 
+			// Return true, the action was performed this frame.
 			return true;
 		}
 		else

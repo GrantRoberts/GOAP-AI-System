@@ -85,11 +85,15 @@ public class CollectOre : GOAPAction
 
 		foreach(GameObject v in veins)
 		{
-			float dist = (v.transform.position - agent.transform.position).magnitude;
-			if (dist < closestDistance)
+			OreVein ore = v.GetComponent<OreVein>();
+			if (ore.GetCurrentMiner() == null)
 			{
-				closest = v;
-				closestDistance = dist;
+				float dist = (v.transform.position - agent.transform.position).magnitude;
+				if (dist < closestDistance)
+				{
+					closest = v;
+					closestDistance = dist;
+				}
 			}
 		}
 
@@ -97,6 +101,7 @@ public class CollectOre : GOAPAction
 			return false;
 
 		m_Target = closest;
+		m_Target.GetComponent<OreVein>().SetCurrentMiner(agent);
 
 		return closest != null;
 	}
@@ -117,7 +122,9 @@ public class CollectOre : GOAPAction
 			{
 				m_Inventory.IncreaseOre(1);
 				m_Mined = true;
-				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
+				OreVein oreVein = m_Target.GetComponent<OreVein>();
+				oreVein.DecreaseOreAmount(1);
+				oreVein.SetCurrentMiner(null);
 
 				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 			}

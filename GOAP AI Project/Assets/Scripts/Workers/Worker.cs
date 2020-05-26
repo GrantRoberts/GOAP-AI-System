@@ -22,9 +22,9 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	private NavMeshAgent m_NavAgent = null;
 
 	/// <summary>
-	/// The position of the target of the goal.
+	/// If the agent currently has a destination for the nav mesh agent to go.
 	/// </summary>
-	private Vector3 m_TargetPosition = Vector3.zero;
+	private bool m_HaveDestination = false;
 
 	/// <summary>
 	/// The hunger of the worker.
@@ -41,20 +41,21 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// </summary>
 	public float m_HungerThreshold = 5.0f;
 
-	public Sprite m_ResourceIcon = null;
+	/// <summary>
+	/// Modifier for decreasing the worker's hunger over time.
+	/// </summary>
+	public float m_HungerModifier = 0.002f;
 
 	private void Awake()
 	{
 		m_Inventory = GetComponent<Inventory>();
 		m_NavAgent = GetComponent<NavMeshAgent>();
-		m_NavAgent.stoppingDistance = m_InteractionRange;
 		m_MaxHunger = m_Hunger;
-		m_Inventory.SetProgressBarSprite(m_ResourceIcon);
 	}
 
 	private void Update()
 	{
-		//Debug.Log(m_Inventory.GetWood());
+		m_Hunger -= (Time.deltaTime * m_HungerModifier);
 	}
 
 	/// <summary>
@@ -75,7 +76,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <param name="failedGoal">The goal that failed.</param>
 	public void PlanFailed(HashSet<KeyValuePair<string, object>> failedGoal)
 	{
-		//Debug.Log("Goal Failed!");
+		Debug.Log("Goal Failed!");
 	}
 
 	/// <summary>
@@ -85,7 +86,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <param name="actions">The actions for achieveing that goal</param>
 	public void PlanFound(HashSet<KeyValuePair<string, object>> goal, Queue<GOAPAction> actions)
 	{
-		//Debug.Log("Goal Found!");
+		Debug.Log("Goal Found!");
 	}
 
 	/// <summary>
@@ -93,7 +94,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// </summary>
 	public void ActionsFinished()
 	{
-		//Debug.Log("Actions Finished!");
+		Debug.Log("Actions Finished!");
 	}
 
 	/// <summary>
@@ -102,7 +103,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <param name="aborter">The action that aborted the plan.</param>
 	public void PlanAborted(GOAPAction aborter)
 	{
-		//Debug.Log("Plan Aborted by " + aborter.name);
+		Debug.Log("Plan Aborted by " + aborter.name);
 	}
 
 	/// <summary>
@@ -117,36 +118,46 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 		{
 			//Debug.Log("I have reached my destination.");
 			nextAction.SetInRange(true);
+			m_HaveDestination = false;
 			return true;
 		}
 		// Else, they're still going.
 		else
 		{
 			// Set the nav mesh agent's destination to the destination of the goal.
-			m_TargetPosition = nextAction.GetTarget().transform.position;
-			m_NavAgent.destination = m_TargetPosition;
+			if (m_HaveDestination == false)
+			{
+				m_NavAgent.destination = nextAction.GetTarget().transform.position;
+				m_HaveDestination = true;
+			}
 
 			return false;
 		}
 	}
 
+	/// <summary>
+	/// Get the worker's hunger.
+	/// </summary>
+	/// <returns>The worker's hunger.</returns>
 	public float GetHunger()
 	{
 		return m_Hunger;
 	}
 
+	/// <summary>
+	/// Reset the worker's hunger.
+	/// </summary>
 	public void ResetHunger()
 	{
 		m_Hunger = m_MaxHunger;
 	}
 
+	/// <summary>
+	/// Decrease the worker's hunger.
+	/// </summary>
+	/// <param name="decrease">How much to decrease the worker's hunger by.</param>
 	public void DecreaseHunger(float decrease)
 	{
 		m_Hunger -= decrease;
-	}
-
-	public Sprite GetResourceIcon()
-	{
-		return m_ResourceIcon;
 	}
 }
