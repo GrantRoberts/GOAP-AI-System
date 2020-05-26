@@ -22,9 +22,9 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	private NavMeshAgent m_NavAgent = null;
 
 	/// <summary>
-	/// The position of the target of the goal.
+	/// If the agent currently has a destination for the nav mesh agent to go.
 	/// </summary>
-	private Vector3 m_TargetPosition = Vector3.zero;
+	private bool m_HaveDestination = false;
 
 	/// <summary>
 	/// The hunger of the worker.
@@ -118,14 +118,18 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 		{
 			//Debug.Log("I have reached my destination.");
 			nextAction.SetInRange(true);
+			m_HaveDestination = false;
 			return true;
 		}
 		// Else, they're still going.
 		else
 		{
 			// Set the nav mesh agent's destination to the destination of the goal.
-			m_TargetPosition = nextAction.GetTarget().transform.position;
-			m_NavAgent.destination = m_TargetPosition;
+			if (m_HaveDestination == false)
+			{
+				m_NavAgent.destination = nextAction.GetTarget().transform.position;
+				m_HaveDestination = true;
+			}
 
 			return false;
 		}
