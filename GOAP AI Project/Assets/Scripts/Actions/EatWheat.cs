@@ -12,9 +12,9 @@ public class EatWheat : GOAPAction
 
 	private void Awake()
 	{
-		AddPrecondition("hungry", true);
+		AddPrecondition("needFood", true);
 
-		AddEffect("hungry", false);
+		AddEffect("needFood", false);
 	}
 
 	public override void DoReset()

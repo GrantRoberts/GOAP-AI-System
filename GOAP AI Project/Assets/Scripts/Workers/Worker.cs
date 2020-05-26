@@ -43,6 +43,8 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 
 	public Sprite m_ResourceIcon = null;
 
+	public float m_HungerModifier = 0.2f;
+
 	private void Awake()
 	{
 		m_Inventory = GetComponent<Inventory>();
@@ -53,7 +55,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 
 	private void Update()
 	{
-		//Debug.Log(m_Inventory.GetWood());
+		m_Hunger -= Time.deltaTime * m_HungerModifier;
 	}
 
 	/// <summary>
@@ -74,7 +76,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <param name="failedGoal">The goal that failed.</param>
 	public void PlanFailed(HashSet<KeyValuePair<string, object>> failedGoal)
 	{
-		//Debug.Log("Goal Failed!");
+		Debug.Log("Goal Failed!");
 	}
 
 	/// <summary>

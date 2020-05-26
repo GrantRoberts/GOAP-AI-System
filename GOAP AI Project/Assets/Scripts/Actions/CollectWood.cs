@@ -41,11 +41,9 @@ public class CollectWood : GOAPAction
 	{
 		// Agent needs to have a wood (chopping) axe.
 		AddPrecondition("hasWoodAxe", true);
-		// Agent can't currently have wood already
-		//AddPrecondition("hasWood", false);
 
 		// This action causes the agent to have wood in it's inventory.
-		AddEffect("hasWood", true);
+		AddEffect("hasWoodHeld", true);
 	}
 
 	/// <summary>
