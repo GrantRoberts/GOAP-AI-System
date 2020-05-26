@@ -47,7 +47,6 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	{
 		m_Inventory = GetComponent<Inventory>();
 		m_NavAgent = GetComponent<NavMeshAgent>();
-		m_NavAgent.stoppingDistance = m_InteractionRange;
 		m_MaxHunger = m_Hunger;
 		m_Inventory.SetProgressBarSprite(m_ResourceIcon);
 	}
