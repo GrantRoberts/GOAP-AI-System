@@ -42,11 +42,6 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	public float m_HungerThreshold = 5.0f;
 
 	/// <summary>
-	/// The icon for the resource this worker is carrying.
-	/// </summary>
-	public Sprite m_ResourceIcon = null;
-
-	/// <summary>
 	/// Modifier for decreasing the worker's hunger over time.
 	/// </summary>
 	public float m_HungerModifier = 0.002f;
@@ -56,7 +51,6 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 		m_Inventory = GetComponent<Inventory>();
 		m_NavAgent = GetComponent<NavMeshAgent>();
 		m_MaxHunger = m_Hunger;
-		m_Inventory.SetProgressBarSprite(m_ResourceIcon);
 	}
 
 	private void Update()
@@ -161,14 +155,5 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	public void DecreaseHunger(float decrease)
 	{
 		m_Hunger -= decrease;
-	}
-
-	/// <summary>
-	/// Get the resource icon from the worker.
-	/// </summary>
-	/// <returns>Sprite of the resource the worker can carry.</returns>
-	public Sprite GetResourceIcon()
-	{
-		return m_ResourceIcon;
 	}
 }

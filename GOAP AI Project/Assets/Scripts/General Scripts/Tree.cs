@@ -42,7 +42,7 @@ public class Tree : MonoBehaviour
 	/// <summary>
 	/// Who is currently targetting this tree.
 	/// </summary>
-	[SerializeField] private GameObject m_CurrentLogger = null;
+	private GameObject m_CurrentLogger = null;
 
 	private void Awake()
 	{
@@ -101,11 +101,19 @@ public class Tree : MonoBehaviour
 		return m_FullyGrown;
 	}
 
+	/// <summary>
+	/// Set the agent currently targeting this tree.
+	/// </summary>
+	/// <param name="logger">GameObject of the agent targeting this tree.</param>
 	public void SetCurrentLogger(GameObject logger)
 	{
 		m_CurrentLogger = logger;
 	}
 
+	/// <summary>
+	/// Get the current agent targeting this tree.
+	/// </summary>
+	/// <returns>GameObject of the agent targeting this tree, null if none.</returns>
 	public GameObject GetCurrentLogger()
 	{
 		return m_CurrentLogger;
