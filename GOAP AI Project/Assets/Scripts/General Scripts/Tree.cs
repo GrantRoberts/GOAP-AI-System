@@ -42,7 +42,7 @@ public class Tree : MonoBehaviour
 	/// <summary>
 	/// Who is currently targetting this tree.
 	/// </summary>
-	private GameObject m_CurrentLogger = null;
+	[SerializeField] private GameObject m_CurrentLogger = null;
 
 	private void Awake()
 	{
