@@ -8,9 +8,9 @@ public class Logger : Worker
 	{
 		HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
 
-		worldData.Add(new KeyValuePair<string, object>("hasWoodAxe", (m_Inventory.GetTool() == "woodAxe")));
-		worldData.Add(new KeyValuePair<string, object>("hasWoodHeld", (m_Inventory.GetWood() > 0)));
-		worldData.Add(new KeyValuePair<string, object>("needFood", (m_Hunger < m_HungerThreshold)));
+		worldData.Add(new KeyValuePair<string, object>("hasWoodAxe", m_Inventory.GetTool() == "woodAxe"));
+		worldData.Add(new KeyValuePair<string, object>("hasWoodHeld", m_Inventory.GetWood() > 0));
+		worldData.Add(new KeyValuePair<string, object>("needFood", m_Hunger < m_HungerThreshold));
 
 		return worldData;
 	}
