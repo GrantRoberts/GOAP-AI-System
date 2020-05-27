@@ -125,6 +125,7 @@ MonoBehaviour:
   m_ToolIcons:
   - {fileID: 21300000, guid: 9abee1aee01320743ae370b46211a7fd, type: 3}
   - {fileID: 21300000, guid: 10537ae0aa596254daad99ddb19043cf, type: 3}
+  - {fileID: 21300000, guid: 984da446221d95b42ac6714215f16808, type: 3}
 --- !u!195 &2155664734032193933
 NavMeshAgent:
   m_ObjectHideFlags: 0
