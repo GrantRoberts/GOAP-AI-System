@@ -42,7 +42,7 @@ public class Tree : MonoBehaviour
 	/// <summary>
 	/// Who is currently targetting this tree.
 	/// </summary>
-	private GameObject m_CurrentLogger = null;
+	private string m_CurrentLogger = null;
 
 	private void Awake()
 	{
@@ -104,17 +104,17 @@ public class Tree : MonoBehaviour
 	/// <summary>
 	/// Set the agent currently targeting this tree.
 	/// </summary>
-	/// <param name="logger">GameObject of the agent targeting this tree.</param>
-	public void SetCurrentLogger(GameObject logger)
+	/// <param name="logger">GameObject of the agent targeting this tree, null if none.</param>
+	public void SetCurrentLogger(string loggerName)
 	{
-		m_CurrentLogger = logger;
+		m_CurrentLogger = loggerName;
 	}
 
 	/// <summary>
 	/// Get the current agent targeting this tree.
 	/// </summary>
 	/// <returns>GameObject of the agent targeting this tree, null if none.</returns>
-	public GameObject GetCurrentLogger()
+	public string GetCurrentLogger()
 	{
 		return m_CurrentLogger;
 	}

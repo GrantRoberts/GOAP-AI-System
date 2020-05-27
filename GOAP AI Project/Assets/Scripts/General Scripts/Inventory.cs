@@ -115,10 +115,20 @@ public class Inventory : MonoBehaviour
 	{
 		m_Tool = tool;
 
-		if (m_Tool == "woodAxe")
-			m_ToolIcon.sprite = m_ToolIcons[0];
-		else if (m_Tool == "orePick")
-			m_ToolIcon.sprite = m_ToolIcons[1];
+		// Set the sprite for what tool the worker is holding.
+		// Switch statement, don't do a Yandere Dev ;)
+		switch(m_Tool)
+		{
+			case"woodAxe":
+				m_ToolIcon.sprite = m_ToolIcons[0];
+				break;
+			case "orePick":
+				m_ToolIcon.sprite = m_ToolIcons[1];
+				break;
+			case "farmingHoe":
+				m_ToolIcon.sprite = m_ToolIcons[2];
+				break;
+		}
 	}
 
 	/// <summary>

@@ -12,7 +12,7 @@ public class OreVein : MonoBehaviour
 	/// <summary>
 	/// The agent currently targeting this ore vein.
 	/// </summary>
-	private GameObject m_CurrentMiner = null;
+	private string m_CurrentMiner = null;
 
 	/// <summary>
 	/// Get the amount of ore avaliable from this vein.
@@ -41,7 +41,7 @@ public class OreVein : MonoBehaviour
 	/// Set the agent currently targeting this ore vein.
 	/// </summary>
 	/// <param name="miner">GameObject of the agent targeting this tree.</param>
-	public void SetCurrentMiner(GameObject miner)
+	public void SetCurrentMiner(string miner)
 	{
 		m_CurrentMiner = miner;
 	}
@@ -50,7 +50,7 @@ public class OreVein : MonoBehaviour
 	/// Get the current agent targeting this tree.
 	/// </summary>
 	/// <returns>GameObject of the agent targeting this tree, null if none.</returns>
-	public GameObject GetCurrentMiner()
+	public string GetCurrentMiner()
 	{
 		return m_CurrentMiner;
 	}

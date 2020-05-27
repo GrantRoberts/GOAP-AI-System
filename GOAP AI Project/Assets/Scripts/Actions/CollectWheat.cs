@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectOre : GOAPAction
+public class CollectWheat : GOAPAction
 {
 	/// <summary>
-	/// If ore has been mined.
+	/// If wheat has been collected.
 	/// </summary>
-	private bool m_Mined = false;
+	private bool m_Farmed = false;
 
 	/// <summary>
 	/// When the action was started.
@@ -37,11 +37,11 @@ public class CollectOre : GOAPAction
 	/// <summary>
 	/// Constructor.
 	/// </summary>
-	public CollectOre()
+	public CollectWheat()
 	{
-		AddPrecondition("hasOrePick", true);
+		AddPrecondition("hasFarmingHoe", true);
 
-		AddEffect("hasOre", true);
+		AddEffect("hasWheat", true);
 	}
 
 	/// <summary>
@@ -49,7 +49,7 @@ public class CollectOre : GOAPAction
 	/// </summary>
 	public override void DoReset()
 	{
-		m_Mined = false;
+		m_Farmed = false;
 		m_StartTime = 0.0f;
 	}
 
@@ -59,7 +59,7 @@ public class CollectOre : GOAPAction
 	/// <returns>If the agent has mined ore.</returns>
 	public override bool IsDone()
 	{
-		return m_Mined;
+		return m_Farmed;
 	}
 
 	/// <summary>
@@ -72,42 +72,41 @@ public class CollectOre : GOAPAction
 	}
 
 	/// <summary>
-	/// Check for the closest ore vein to mine ore from.
+	/// Check for the closest wheat field to collect wheat from.
 	/// </summary>
 	/// <param name="agent">The agent we are checking for.</param>
-	/// <returns>If an ore vein was found.</returns>
+	/// <returns>If a wheat field was found.</returns>
 	public override bool CheckProceduralPrecondition(GameObject agent)
 	{
 		// Get all the ore veins in the scene.
-		GameObject[] veins = GameObject.FindGameObjectsWithTag("Ore");
-		GameObject closest = veins[0];
+		GameObject[] fields = GameObject.FindGameObjectsWithTag("Wheat Field");
+		GameObject closest = fields[0];
 		float closestDistance = (closest.transform.position - agent.transform.position).magnitude;
 
 		// Find the closest ore vein.
-		foreach(GameObject v in veins)
+		foreach (GameObject f in fields)
 		{
-			// Check that no one else is targeting this ore vein.
-			OreVein ore = v.GetComponent<OreVein>();
-			if (ore.GetCurrentMiner() == null)
+			WheatField field = f.GetComponent<WheatField>();
+			if (field.GetCurrentFarmer() == null)
 			{
-				float dist = (v.transform.position - agent.transform.position).magnitude;
+				float dist = (f.transform.position - agent.transform.position).magnitude;
 				// Target the closest ore vein that no one else is targeting.
 				if (dist < closestDistance)
 				{
-					closest = v;
+					closest = f;
 					closestDistance = dist;
 				}
 			}
 		}
 
-		// Return false if an ore vein couldn't be found.
+		// Return false if a wheat field couldn't be found.
 		if (closest == null)
 			return false;
 
-		// Target the closest ore vein.
+		// Target the closest wheat field.
 		m_Target = closest;
-		// Tell the ore vein that this agent is targeting it.
-		m_Target.GetComponent<OreVein>().SetCurrentMiner(agent.name);
+		// Tell the wheat field that this agent is targeting it.
+		m_Target.GetComponent<WheatField>().SetCurrentFarmer(agent.name);
 
 		return closest != null;
 	}
@@ -119,7 +118,7 @@ public class CollectOre : GOAPAction
 	/// <returns>If the action was performed this frame.</returns>
 	public override bool Perform(GameObject agent)
 	{
-		// Make sure the ore vein is active.
+		// Make sure the wheat field is active.
 		if (m_Target.activeSelf != false)
 		{
 			if (m_StartTime == 0.0f)
@@ -129,11 +128,9 @@ public class CollectOre : GOAPAction
 			if (Time.time - m_StartTime > m_WorkDuration)
 			{
 				// Update everything that work has been done.
-				m_Inventory.IncreaseOre(1);
-				m_Mined = true;
-				OreVein oreVein = m_Target.GetComponent<OreVein>();
-				oreVein.DecreaseOreAmount(1);
-				oreVein.SetCurrentMiner(null);
+				m_Farmed = true;
+				WheatField wheatField = m_Target.GetComponent<WheatField>();
+				wheatField.SetCurrentFarmer(null);
 
 				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 			}
