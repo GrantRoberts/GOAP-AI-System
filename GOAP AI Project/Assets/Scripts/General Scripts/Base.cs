@@ -108,6 +108,12 @@ public class Base : MonoBehaviour
 		UpdateFoodCollected();
 	}
 
+	public void DecreaseFoodCollected(int food)
+	{
+		m_FoodCollected -= food;
+		UpdateFoodCollected();
+	}
+
 	/// <summary>
 	/// Update the text showing the food that has been stored in the base.
 	/// </summary>
