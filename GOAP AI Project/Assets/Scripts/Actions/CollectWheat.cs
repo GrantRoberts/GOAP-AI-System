@@ -128,6 +128,7 @@ public class CollectWheat : GOAPAction
 			if (Time.time - m_StartTime > m_WorkDuration)
 			{
 				// Update everything that work has been done.
+				m_Inventory.IncreaseFood(1);
 				m_Farmed = true;
 				WheatField wheatField = m_Target.GetComponent<WheatField>();
 				wheatField.SetCurrentFarmer(null);

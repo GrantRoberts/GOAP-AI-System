@@ -146,6 +146,7 @@ public class CollectWood : GOAPAction
 			// Return true, the action was performed this frame.
 			return true;
 		}
+		// The action was not performed this frame.
 		else
 			return false;
 	}
