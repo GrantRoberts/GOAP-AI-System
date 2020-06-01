@@ -86,7 +86,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <param name="actions">The actions for achieveing that goal</param>
 	public void PlanFound(HashSet<KeyValuePair<string, object>> goal, Queue<GOAPAction> actions)
 	{
-		Debug.Log("Goal Found!");
+		//Debug.Log("Goal Found!");
 	}
 
 	/// <summary>
@@ -94,7 +94,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// </summary>
 	public void ActionsFinished()
 	{
-		Debug.Log("Actions Finished!");
+		//Debug.Log("Actions Finished!");
 	}
 
 	/// <summary>
@@ -103,7 +103,7 @@ public abstract class Worker : MonoBehaviour, GOAPInterface
 	/// <param name="aborter">The action that aborted the plan.</param>
 	public void PlanAborted(GOAPAction aborter)
 	{
-		Debug.Log("Plan Aborted by " + aborter.name);
+		//Debug.Log("Plan Aborted by " + aborter.name);
 	}
 
 	/// <summary>

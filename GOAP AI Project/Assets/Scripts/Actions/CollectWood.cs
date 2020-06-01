@@ -82,8 +82,8 @@ public class CollectWood : GOAPAction
 	{
 		// Get all the trees in the scene.
 		GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
-		GameObject closest = trees[0];
-		float closestDistance = (closest.transform.position - agent.transform.position).magnitude;
+		GameObject closest = null;
+		float closestDistance = float.MaxValue;
 
 		// Find the closest tree.
 		foreach (GameObject t in trees)
@@ -102,16 +102,17 @@ public class CollectWood : GOAPAction
 			}
 		}
 
-		// Return false if this action doesn't have a target.
-		if (closest == null)
+		if (closest != null)
+		{
+			// Target the closest tree.
+			m_Target = closest;
+			// Tell the tree that this agent is targeting it.
+			m_Target.GetComponent<Tree>().SetCurrentLogger(agent.name);
+
+			return m_Target != null;
+		}
+		else
 			return false;
-
-		// Target the closest tree.
-		m_Target = closest;
-		// Tell the tree that this agent is targeting it.
-		m_Target.GetComponent<Tree>().SetCurrentLogger(agent.name);
-
-		return closest != null;
 	}
 
 	/// <summary>
@@ -121,32 +122,26 @@ public class CollectWood : GOAPAction
 	/// <returns>If the action is being performed.</returns>
 	public override bool Perform(GameObject agent)
 	{
-		// Make sure the tree is fully grown before performing an action on it.
-		if (m_Target.GetComponent<Tree>().GetFullyGrown())
+		if (m_StartTime == 0)
+			m_StartTime = Time.time;
+
+		// Work complete.
+		if (Time.time - m_StartTime > m_WorkDuration)
 		{
-			if (m_StartTime == 0)
-				m_StartTime = Time.time;
+			// Update everything that work has been done.
+			m_Inventory.IncreaseWood(1);
+			m_Chopped = true;
+			Tree targetTree = m_Target.GetComponent<Tree>();
+			targetTree.DecreaseWoodAmount(1);
+			targetTree.SetCurrentLogger(null);
 
-			// Work complete.
-			if (Time.time - m_StartTime > m_WorkDuration)
-			{
-				// Update everything that work has been done.
-				m_Inventory.IncreaseWood(1);
-				m_Chopped = true;
-				Tree targetTree = m_Target.GetComponent<Tree>();
-				targetTree.DecreaseWoodAmount(1);
-				targetTree.SetCurrentLogger(null);
-
-				agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
-			}
-
-			// Set progress for the progress bar.
-			m_Inventory.SetProgress((Time.time - m_StartTime) / m_WorkDuration);
-
-			// Return true, the action was performed this frame.
-			return true;
+			agent.GetComponent<Worker>().DecreaseHunger(m_WorkHunger);
 		}
-		else
-			return false;
+
+		// Set progress for the progress bar.
+		m_Inventory.SetProgress((Time.time - m_StartTime) / m_WorkDuration);
+
+		// Return true, the action was performed this frame.
+		return true;
 	}
 }

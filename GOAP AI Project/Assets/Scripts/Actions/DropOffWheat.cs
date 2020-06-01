@@ -70,7 +70,8 @@ public class DropOffWheat : GOAPAction
 	public override bool Perform(GameObject agent)
 	{
 		Inventory inv = agent.GetComponent<Inventory>();
-
+		m_Target.GetComponent<Base>().AddFoodCollected(inv.GetFood());
+		inv.SetFood(0);
 		inv.SetProgress(0);
 		m_DroppedOffWheat = true;
 

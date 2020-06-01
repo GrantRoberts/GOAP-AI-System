@@ -80,8 +80,8 @@ public class CollectWheat : GOAPAction
 	{
 		// Get all the ore veins in the scene.
 		GameObject[] fields = GameObject.FindGameObjectsWithTag("Wheat Field");
-		GameObject closest = fields[0];
-		float closestDistance = (closest.transform.position - agent.transform.position).magnitude;
+		GameObject closest = null;
+		float closestDistance = float.MaxValue;
 
 		// Find the closest ore vein.
 		foreach (GameObject f in fields)
@@ -99,16 +99,17 @@ public class CollectWheat : GOAPAction
 			}
 		}
 
-		// Return false if a wheat field couldn't be found.
-		if (closest == null)
+		if (closest != null)
+		{
+			// Target the closest wheat field.
+			m_Target = closest;
+			// Tell the wheat field that this agent is targeting it.
+			m_Target.GetComponent<WheatField>().SetCurrentFarmer(agent.name);
+
+			return m_Target != null;
+		}
+		else
 			return false;
-
-		// Target the closest wheat field.
-		m_Target = closest;
-		// Tell the wheat field that this agent is targeting it.
-		m_Target.GetComponent<WheatField>().SetCurrentFarmer(agent.name);
-
-		return closest != null;
 	}
 
 	/// <summary>
@@ -128,6 +129,7 @@ public class CollectWheat : GOAPAction
 			if (Time.time - m_StartTime > m_WorkDuration)
 			{
 				// Update everything that work has been done.
+				m_Inventory.IncreaseFood(1);
 				m_Farmed = true;
 				WheatField wheatField = m_Target.GetComponent<WheatField>();
 				wheatField.SetCurrentFarmer(null);

@@ -16,11 +16,24 @@ public class Base : MonoBehaviour
 	private int m_OreCollected = 0;
 
 	/// <summary>
+	/// The food that has been collected.
+	/// </summary>
+	private int m_FoodCollected = 0;
+
+	/// <summary>
 	/// Text Mesh Pro text for the score of wood collected.
 	/// </summary>
 	public TextMeshProUGUI m_WoodCollectedScore = null;
 
+	/// <summary>
+	/// Text Mesh Pro text for the score of ore collected.
+	/// </summary>
 	public TextMeshProUGUI m_OreCollectedScore = null;
+
+	/// <summary>
+	/// Text Mesh Pro text for the score of food collected.
+	/// </summary>
+	public TextMeshProUGUI m_FoodCollectedScore = null;
 
 	/// <summary>
 	/// Get how much wood has been collected.
@@ -74,5 +87,38 @@ public class Base : MonoBehaviour
 	private void UpdateOreCollected()
 	{
 		m_OreCollectedScore.text = m_OreCollected.ToString();
+	}
+
+	/// <summary>
+	/// Get how much food has been collected.
+	/// </summary>
+	/// <returns>The amount of food that has been stored in the base.</returns>
+	public int GetFoodCollected()
+	{
+		return m_FoodCollected;
+	}
+
+	/// <summary>
+	/// Add food to the food stored in the base.
+	/// </summary>
+	/// <param name="food">The amount of food to be added to the base.</param>
+	public void AddFoodCollected(int food)
+	{
+		m_FoodCollected += food;
+		UpdateFoodCollected();
+	}
+
+	public void DecreaseFoodCollected(int food)
+	{
+		m_FoodCollected -= food;
+		UpdateFoodCollected();
+	}
+
+	/// <summary>
+	/// Update the text showing the food that has been stored in the base.
+	/// </summary>
+	private void UpdateFoodCollected()
+	{
+		m_FoodCollectedScore.text = m_FoodCollected.ToString();
 	}
 }

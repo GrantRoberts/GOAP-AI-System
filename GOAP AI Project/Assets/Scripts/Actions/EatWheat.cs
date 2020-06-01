@@ -63,26 +63,13 @@ public class EatWheat : GOAPAction
 	/// <returns>If a target was found.</returns>
 	public override bool CheckProceduralPrecondition(GameObject agent)
 	{
-		GameObject[] fields = GameObject.FindGameObjectsWithTag("Wheat Field");
-		GameObject closest = fields[0];
-		float closestDistance = (closest.transform.position - agent.transform.position).magnitude;
+		m_Target = GameObject.FindGameObjectWithTag("Base");
 
-		foreach(GameObject f in fields)
-		{
-			float dist = (f.transform.position - agent.transform.position).magnitude;
-			if (dist < closestDistance)
-			{
-				closest = f;
-				closestDistance = dist;
-			}
-		}
-
-		if (closest == null)
+		// Check there is food avaliable at the base.
+		if (m_Target.GetComponent<Base>().GetFoodCollected() > 0)
+			return m_Target != null;
+		else
 			return false;
-
-		m_Target = closest;
-
-		return closest != null;
 	}
 
 	/// <summary>
@@ -95,11 +82,21 @@ public class EatWheat : GOAPAction
 		if (m_StartTime == 0.0f)
 			m_StartTime = Time.time;
 
-		if (Time.time - m_StartTime > m_EatDuration)
-		{
-			agent.GetComponent<Worker>().ResetHunger();
-			m_Eaten = true;
+		// Make sure there is enough food to feed this agent.
+		// Another agent may have finished eating while this one was.
+		Base b = m_Target.GetComponent<Base>();
+		if (b.GetFoodCollected() > 0)
+		{ 
+			if (Time.time - m_StartTime > m_EatDuration)
+			{
+				agent.GetComponent<Worker>().ResetHunger();
+				m_Eaten = true;
+				b.DecreaseFoodCollected(1);
+			}
 		}
+		else
+			return false;
+
 		return true;
 	}
 }

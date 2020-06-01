@@ -16,6 +16,11 @@ public class Inventory : MonoBehaviour
 	private int m_OreCollected = 0;
 
 	/// <summary>
+	/// The amount of food this agent has collected.
+	/// </summary>
+	private int m_FoodCollected = 0;
+
+	/// <summary>
 	/// The tool the agent has equipped.
 	/// </summary>
 	private string m_Tool = "";
@@ -48,9 +53,9 @@ public class Inventory : MonoBehaviour
 	/// Increase the wood in the agent's inventory.
 	/// </summary>
 	/// <param name="add">How much wood to add.</param>
-	public void IncreaseWood(int add)
+	public void IncreaseWood(int wood)
 	{
-		m_WoodCollected += add;
+		m_WoodCollected += wood;
 	}
 
 	/// <summary>
@@ -75,9 +80,9 @@ public class Inventory : MonoBehaviour
 	/// Increase the ore in the agent's inventory.
 	/// </summary>
 	/// <param name="add">How much ore to add.</param>
-	public void IncreaseOre(int add)
+	public void IncreaseOre(int ore)
 	{
-		m_OreCollected += add;
+		m_OreCollected += ore;
 	}
 
 	/// <summary>
@@ -96,6 +101,33 @@ public class Inventory : MonoBehaviour
 	public void SetOre(int newOre)
 	{
 		m_OreCollected = newOre;
+	}
+
+	/// <summary>
+	/// Increase the food in the agent's inventory.
+	/// </summary>
+	/// <param name="food">How much food to add.</param>
+	public void IncreaseFood(int food)
+	{
+		m_FoodCollected += food;
+	}
+
+	/// <summary>
+	/// Get the amount of food the agent has.
+	/// </summary>
+	/// <returns>The amount of food the agent is carrying.</returns>
+	public int GetFood()
+	{
+		return m_FoodCollected;
+	}
+
+	/// <summary>
+	/// Set how much food the agent has.
+	/// </summary>
+	/// <param name="newFood">What to set the agent's food count to.</param>
+	public void SetFood(int newFood)
+	{
+		m_FoodCollected = newFood;
 	}
 
 	/// <summary>
