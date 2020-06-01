@@ -65,7 +65,11 @@ public class EatWheat : GOAPAction
 	{
 		m_Target = GameObject.FindGameObjectWithTag("Base");
 
-		return m_Target != null;
+		// Check there is food avaliable at the base.
+		if (m_Target.GetComponent<Base>().GetFoodCollected() > 0)
+			return m_Target != null;
+		else
+			return false;
 	}
 
 	/// <summary>
@@ -78,19 +82,21 @@ public class EatWheat : GOAPAction
 		if (m_StartTime == 0.0f)
 			m_StartTime = Time.time;
 
-		if (Time.time - m_StartTime > m_EatDuration)
-		{
-			// Make sure there is enough food to feed this agent.
-			Base b = m_Target.GetComponent<Base>();
-			if (b.GetFoodCollected() > 0)
+		// Make sure there is enough food to feed this agent.
+		// Another agent may have finished eating while this one was.
+		Base b = m_Target.GetComponent<Base>();
+		if (b.GetFoodCollected() > 0)
+		{ 
+			if (Time.time - m_StartTime > m_EatDuration)
 			{
 				agent.GetComponent<Worker>().ResetHunger();
 				m_Eaten = true;
 				b.DecreaseFoodCollected(1);
 			}
-			else
-				return false;
 		}
+		else
+			return false;
+
 		return true;
 	}
 }
