@@ -52,8 +52,10 @@ public class Tree : MonoBehaviour
 
 	private void Update()
 	{
+		// Check if the tree is fully grown.
 		if (!m_FullyGrown)
 		{
+			// Growing animation for the tree.
 			float timeCovered = (Time.time - m_StartGrowingTime);
 			float fractionOfTime = timeCovered / m_GrowingTime;
 		
