@@ -2173,12 +2173,13 @@ GameObject:
   - component: {fileID: 934800333}
   - component: {fileID: 934800332}
   - component: {fileID: 934800336}
+  - component: {fileID: 934800337}
   m_Layer: 0
   m_Name: Base
   m_TagString: Base
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!65 &934800332
 BoxCollider:
@@ -2268,6 +2269,22 @@ MonoBehaviour:
   m_WoodCollectedScore: {fileID: 130275527}
   m_OreCollectedScore: {fileID: 1777288220}
   m_FoodCollectedScore: {fileID: 1240683646}
+--- !u!208 &934800337
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934800331}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &996450671
 GameObject:
   m_ObjectHideFlags: 0

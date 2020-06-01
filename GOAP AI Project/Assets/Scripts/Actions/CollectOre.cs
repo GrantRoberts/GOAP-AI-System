@@ -80,8 +80,8 @@ public class CollectOre : GOAPAction
 	{
 		// Get all the ore veins in the scene.
 		GameObject[] veins = GameObject.FindGameObjectsWithTag("Ore");
-		GameObject closest = veins[0];
-		float closestDistance = (closest.transform.position - agent.transform.position).magnitude;
+		GameObject closest = null;
+		float closestDistance = float.MaxValue;
 
 		// Find the closest ore vein.
 		foreach(GameObject v in veins)
@@ -100,16 +100,17 @@ public class CollectOre : GOAPAction
 			}
 		}
 
-		// Return false if an ore vein couldn't be found.
-		if (closest == null)
+		if (closest != null)
+		{
+			// Target the closest ore vein.
+			m_Target = closest;
+			// Tell the ore vein that this agent is targeting it.
+			m_Target.GetComponent<OreVein>().SetCurrentMiner(agent.name);
+
+			return m_Target != null;
+		}
+		else
 			return false;
-
-		// Target the closest ore vein.
-		m_Target = closest;
-		// Tell the ore vein that this agent is targeting it.
-		m_Target.GetComponent<OreVein>().SetCurrentMiner(agent.name);
-
-		return closest != null;
 	}
 
 	/// <summary>
