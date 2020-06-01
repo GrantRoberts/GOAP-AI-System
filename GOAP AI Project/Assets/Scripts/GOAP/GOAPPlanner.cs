@@ -42,7 +42,7 @@ public class GOAPPlanner
 
 		if (!success)
 		{
-			Debug.Log("Planning failed! Plan couldn't be created.");
+			Debug.Log(agent.name + "'s planning failed!");
 			return null;
 		}
 

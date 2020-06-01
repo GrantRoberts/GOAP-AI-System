@@ -336,8 +336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionRange: 3
-  m_Hunger: 100
-  m_HungerThreshold: 50
+  m_Hunger: 50
+  m_HungerThreshold: 25
   m_HungerModifier: 0.002
 --- !u!1 &36366024
 GameObject:
@@ -677,8 +677,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionRange: 3
-  m_Hunger: 100
-  m_HungerThreshold: 50
+  m_Hunger: 50
+  m_HungerThreshold: 25
   m_HungerModifier: 0.002
 --- !u!114 &140936995
 MonoBehaviour:
@@ -1232,8 +1232,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionRange: 3
-  m_Hunger: 100
-  m_HungerThreshold: 50
+  m_Hunger: 50
+  m_HungerThreshold: 25
   m_HungerModifier: 0.002
 --- !u!114 &525998587
 MonoBehaviour:
@@ -1625,8 +1625,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionRange: 3
-  m_Hunger: 100
-  m_HungerThreshold: 50
+  m_Hunger: 50
+  m_HungerThreshold: 25
   m_HungerModifier: 0.002
 --- !u!114 &603203707
 MonoBehaviour:
@@ -2648,8 +2648,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionRange: 3
-  m_Hunger: 100
-  m_HungerThreshold: 50
+  m_Hunger: 50
+  m_HungerThreshold: 25
   m_HungerModifier: 0.002
 --- !u!114 &1139092659
 MonoBehaviour:
@@ -3143,8 +3143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionRange: 3
-  m_Hunger: 100
-  m_HungerThreshold: 50
+  m_Hunger: 50
+  m_HungerThreshold: 25
   m_HungerModifier: 0.002
 --- !u!114 &1571756575
 MonoBehaviour:
@@ -3245,8 +3245,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionRange: 3
-  m_Hunger: 100
-  m_HungerThreshold: 50
+  m_Hunger: 50
+  m_HungerThreshold: 25
   m_HungerModifier: 0.002
 --- !u!114 &1647422641
 MonoBehaviour:
