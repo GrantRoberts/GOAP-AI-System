@@ -46,7 +46,7 @@ public class GOAPPlanner
 			return null;
 		}
 
-		// Find the cheapest node in the list.
+		// Find the cheapest node in the list to start at.
 		Node cheapest = leaves[0];
 		foreach (Node leaf in leaves)
 		{
