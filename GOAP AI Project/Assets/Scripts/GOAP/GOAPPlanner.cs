@@ -36,10 +36,11 @@ public class GOAPPlanner
 		// Actions to the goal.
 		List<Node> leaves = new List<Node>();
 
-		// Create a starting node and begin building the graph of actions.
+		// Create a starting node and begin building the graph of the usable actions found before.
 		Node start = new Node(null, 0, worldState, null);
 		bool success = BuildGraph(start, leaves, usableActions, goal);
 
+		// Check a graph was built.
 		if (!success)
 		{
 			Debug.Log(agent.name + "'s planning failed!");
@@ -60,6 +61,7 @@ public class GOAPPlanner
 		while (n != null)
 		{
 			if (n.m_Action != null)
+				// Building the list of actions from the back to front.
 				result.Insert(0, n.m_Action);
 			n = n.m_Parent;
 		}
