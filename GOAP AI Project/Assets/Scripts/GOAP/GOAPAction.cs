@@ -117,6 +117,7 @@ public abstract class GOAPAction : MonoBehaviour
 			if (con.Key.Equals(name))
 				remove = con;
 		}
+		// Check if remove is null.
 		if (!default(KeyValuePair<string, object>).Equals(remove))
 			m_Preconditions.Remove(remove);
 	}
@@ -138,11 +139,13 @@ public abstract class GOAPAction : MonoBehaviour
 	public void RemoveEffect(string name)
 	{
 		KeyValuePair<string, object> remove = default(KeyValuePair<string, object>);
+		// Find the effect to remove by checking their names.
 		foreach (KeyValuePair<string, object> con in m_Effects)
 		{
 			if (con.Key.Equals(name))
 				remove = con;
 		}
+		// Check if remove is null.
 		if (!default(KeyValuePair<string, object>).Equals(remove))
 			m_Effects.Remove(remove);
 	}
