@@ -148,7 +148,6 @@ public class Inventory : MonoBehaviour
 		m_Tool = tool;
 
 		// Set the sprite for what tool the worker is holding.
-		// Switch statement, don't do a Yandere Dev ;)
 		switch(m_Tool)
 		{
 			case"woodAxe":
